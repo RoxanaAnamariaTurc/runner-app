@@ -1,0 +1,28 @@
+{
+  "name": "Crosul Speranței Blaj",
+  "short_name": "Crosul Speranței",
+  "description": "Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f3e25",
+  "theme_color": "#1f3e25",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./assets/images/logo-crosul.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/images/logo-crosul.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["sports", "events", "charity"],
+  "lang": "ro",
+  "scope": "/",
+  "splash_pages": null
+}

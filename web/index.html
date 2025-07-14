@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1.00001,viewport-fit=cover"
+    />
+
+    <!-- Primary Meta Tags -->
+    <title>Crosul Speranței Blaj - Editia a VI-a</title>
+    <meta name="title" content="Crosul Speranței Blaj - Editia a VI-a" />
+    <meta
+      name="description"
+      content="Alătură-te celei de-a VI-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil. Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă."
+    />
+    <meta
+      name="keywords"
+      content="cros, Blaj, Alba, alergare, caritate, sport, evenimente, speranța, Romania"
+    />
+    <meta name="author" content="Crosul Speranței Blaj" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://crosul-sperantei-blaj.netlify.app/"
+    />
+    <meta property="og:title" content="Crosul Speranței Blaj - Editia a VI-a" />
+    <meta
+      property="og:description"
+      content="Alătură-te celei de-a VI-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil. Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă."
+    />
+    <meta property="og:image" content="./assets/images/logo-crosul.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ro_RO" />
+    <meta property="og:site_name" content="Crosul Speranței Blaj" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://crosul-sperantei-blaj.netlify.app/"
+    />
+    <meta
+      property="twitter:title"
+      content="Crosul Speranței Blaj - Editia a VI-a"
+    />
+    <meta
+      property="twitter:description"
+      content="Alătură-te celei de-a VI-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil."
+    />
+    <meta property="twitter:image" content="./assets/images/logo-crosul.png" />
+
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/png" href="./assets/images/logo-crosul.png" />
+    <link rel="apple-touch-icon" href="./assets/images/logo-crosul.png" />
+    <link rel="shortcut icon" href="./assets/images/logo-crosul.png" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#1f3e25" />
+    <meta name="msapplication-TileColor" content="#1f3e25" />
+    <meta name="msapplication-config" content="./browserconfig.xml" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json" />
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="./assets/images/logo-crosul.png" as="image" />
+
+    <style>
+      /**
+     * Expo Router requires the root view to fill the whole screen.
+     * This is a standard requirement for React Native apps.
+     */
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        overflow: hidden;
+      }
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+        background-color: #1f3e25;
+      }
+
+      /* Loading screen */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #1f3e25;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loading-logo {
+        width: 120px;
+        height: 60px;
+        object-fit: contain;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.5;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="loading-screen" id="loading-screen">
+        <img
+          src="./assets/images/logo-crosul.png"
+          alt="Crosul Speranței Blaj"
+          class="loading-logo"
+        />
+      </div>
+    </div>
+
+    <script>
+      // Hide loading screen once app loads
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          const loadingScreen = document.getElementById("loading-screen");
+          if (loadingScreen) {
+            loadingScreen.style.opacity = "0";
+            loadingScreen.style.transition = "opacity 0.5s ease-out";
+            setTimeout(function () {
+              loadingScreen.style.display = "none";
+            }, 500);
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,591 @@
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Animated,
+  Platform,
+  Dimensions,
+} from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import { router } from "expo-router";
+import Footer from "./_components/Footer";
+import { eventsData, Event } from "./data/events";
+import { LinearGradient } from "expo-linear-gradient";
+import { previousEventsData } from "./data/previousEvents";
+
+export default function Home() {
+  const featuredEvents = eventsData.filter((event) => event.featured);
+  const arrowAnimation = useRef(new Animated.Value(0)).current;
+  const scrollAnimation = useRef(new Animated.Value(0)).current;
+  const [screenData, setScreenData] = useState(Dimensions.get("window"));
+
+  useEffect(() => {
+    const onChange = (result: any) => {
+      setScreenData(result.window);
+    };
+
+    const subscription = Dimensions.addEventListener("change", onChange);
+    return () => subscription?.remove();
+  }, []);
+
+  // Start arrow animation when component mounts
+  React.useEffect(() => {
+    const animate = () => {
+      Animated.sequence([
+        Animated.timing(arrowAnimation, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: Platform.OS !== "web", // Disable native driver on web
+        }),
+        Animated.timing(arrowAnimation, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: Platform.OS !== "web", // Disable native driver on web
+        }),
+      ]).start(() => animate());
+    };
+    animate();
+
+    // Start continuous scroll animation for previous events
+    const scrollAnimate = () => {
+      scrollAnimation.setValue(0);
+      Animated.loop(
+        Animated.timing(scrollAnimation, {
+          toValue: 1,
+          duration: 60000, // 60 seconds - slower animation for 26 images
+          useNativeDriver: Platform.OS !== "web",
+        }),
+        { iterations: -1 } // Infinite loop
+      ).start();
+    };
+    scrollAnimate();
+  }, [arrowAnimation, scrollAnimation]);
+
+  const arrowTranslateY = arrowAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 5],
+  });
+
+  // Calculate responsive card width
+  const getCardWidth = () => {
+    const { width } = screenData;
+    if (Platform.OS === "web") {
+      if (width < 480) return Math.min(width * 0.85, 300); // Mobile: 85% of screen width, max 300px
+      if (width < 768) return Math.min(width * 0.7, 320); // Small tablet: 70% of screen width, max 320px
+      if (width < 1024) return 300; // Medium tablet: fixed 300px
+      return 280; // Desktop: original 280px
+    }
+    return 280; // Native mobile: keep original size
+  };
+
+  const renderFeaturedEvent = (item: Event) => {
+    const cardWidth = getCardWidth();
+    return (
+      <View key={item.id} style={[styles.carouselCard, { width: cardWidth }]}>
+        <Image source={item.image} style={styles.carouselImage} />
+        <View style={styles.carouselContent}>
+          <View style={styles.carouselInfo}>
+            <Text style={styles.carouselTitle}>{item.title}</Text>
+            <Text style={styles.carouselDate}>{item.date}</Text>
+            <Text style={styles.carouselLocation}>{item.location}</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.detailsButton}
+              onPress={() => router.push(`/event-details?id=${item.id}`)}
+            >
+              <Text style={styles.detailsButtonText}>DETALII</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const renderPreviousEvents = () => {
+    // Use double the events array for seamless infinite scroll with 26 images
+    const doubleEvents = [...previousEventsData, ...previousEventsData];
+    const cardWidth = 165; // Width of each card + margin
+    const totalWidth = previousEventsData.length * cardWidth;
+
+    const translateX = scrollAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -totalWidth], // Scroll exactly one set width
+    });
+
+    return doubleEvents.map((event, index) => (
+      <Animated.View
+        key={`${event.id}-${Math.floor(index / previousEventsData.length)}-${
+          index % previousEventsData.length
+        }`}
+        style={[
+          styles.previousEventCard,
+          {
+            transform: [{ translateX }],
+          },
+        ]}
+      >
+        <Animated.Image
+          source={event.image}
+          style={[
+            styles.previousEventImage,
+            {
+              transform: [
+                {
+                  scale: scrollAnimation.interpolate({
+                    inputRange: [0, 0.5, 1],
+                    outputRange: [1, 1.02, 1],
+                  }),
+                },
+              ],
+            },
+          ]}
+        />
+        <Text style={styles.previousEventTitle}>{event.title}</Text>
+      </Animated.View>
+    ));
+  };
+
+  const sponsorsData = [
+    "NLA",
+    "Apidava",
+    "JIDVEI",
+    "DECATHLON",
+    "BOSCH",
+    "ALPIN 57",
+    "GENERALI",
+    "WII",
+    "MONTANA POPA",
+    "FJTA",
+    "DARA TRANSILVANIA",
+    "AMMA CLINIQUE",
+    "CAFEA",
+    "SALON GEORGIA AIUD",
+    "CASANDRA",
+    "SOFIA STORE",
+    "ANIMAL FERMA",
+    "DEPO MARKET",
+    "CLUB BLAJ",
+    "CROSUL SPERANTEI",
+  ];
+
+  const renderSponsors = () => {
+    return sponsorsData.map((sponsor, index) => (
+      <View key={index} style={styles.sponsorCard}>
+        <Text style={styles.sponsorText}>{sponsor}</Text>
+      </View>
+    ));
+  };
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.mainScrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.content}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.mainTitle}>CROSUL SPERANTEI BLAJ</Text>
+            <View style={styles.titleDivider} />
+            <Text style={styles.subtitle}>Editia a VIII -a</Text>
+          </View>
+
+          {/* Featured Events Section */}
+          <View style={styles.featuredSectionContainer}>
+            <Text style={styles.featuredSectionTitle}>
+              Evenimente în desfășurare
+            </Text>
+            <Text style={styles.featuredSectionNote}>
+              Unele evenimente sunt în desfășurare și te poți alătura oricând!
+            </Text>
+          </View>
+
+          {/* Featured Events Horizontal Scroll */}
+          <View style={styles.carouselContainer}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={[
+                styles.scrollContainer,
+                Platform.OS === "web" &&
+                  screenData.width < 768 &&
+                  styles.scrollContainerSmall,
+              ]}
+              centerContent={featuredEvents.length === 1} // Center content if only one item
+            >
+              {featuredEvents.map(renderFeaturedEvent)}
+            </ScrollView>
+          </View>
+
+          {/* All Events Button - Now inside the scrollable area */}
+          <TouchableOpacity
+            style={styles.allEventsButton}
+            onPress={() => router.push("/events")}
+          >
+            <Text style={styles.allEventsText}>Toate Evenimentele</Text>
+            <Animated.Text
+              style={[
+                styles.arrowIcon,
+                { transform: [{ translateY: arrowTranslateY }] },
+              ]}
+            >
+              ↓
+            </Animated.Text>
+          </TouchableOpacity>
+
+          <View style={styles.imperfectCardContainer}>
+            <LinearGradient
+              colors={[
+                "rgba(31,62,37,0.9)",
+                "rgba(240,210,110,0.1)",
+                "rgba(31,62,37,0.9)",
+              ]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.previousEventsCard}
+            >
+              <Text style={styles.previousEventsTitle}>
+                Evenimente Precedente
+              </Text>
+              <View style={styles.previousEventsScrollView}>
+                <View style={styles.previousEventsContainer}>
+                  {renderPreviousEvents()}
+                </View>
+              </View>
+            </LinearGradient>
+
+            {/* Bottom diagonal border */}
+            {/* <View style={styles.bottomDiagonalBorder} /> */}
+          </View>
+
+          {/* Sponsors Section */}
+          <View style={styles.sponsorsSection}>
+            <Text style={styles.sponsorsTitle}>Partenerii Noștri</Text>
+            <View style={styles.sponsorsGrid}>{renderSponsors()}</View>
+          </View>
+        </View>
+
+        <Footer />
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#1f3e25", // Back to solid dark green
+  },
+  mainScrollView: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: Platform.OS === "web" ? 0 : 20, // Test: no padding on web
+    paddingBottom: 40, // Add bottom padding for better scroll experience
+  },
+  titleContainer: {
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  mainTitle: {
+    color: "#ffffff",
+    fontSize: 24,
+    textAlign: "center",
+    fontWeight: "bold",
+    letterSpacing: 1,
+  },
+  titleDivider: {
+    width: 120,
+    height: 2,
+    backgroundColor: "rgba(231, 76, 60, 0.3)", // Modern softer red
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  subtitle: {
+    color: "#f0d26e", // Updated to new yellow color
+    fontSize: 14,
+    textAlign: "center",
+    marginTop: 5,
+    fontWeight: "bold",
+  },
+  carouselContainer: {
+    marginTop: 20,
+    marginBottom: 30, // Increased margin for better spacing
+    height: 350,
+    width: "100%", // Ensure full width
+  },
+  scrollContainer: {
+    paddingHorizontal: 10,
+    minWidth: "100%",
+    justifyContent: "center",
+  },
+  scrollContainerSmall: {
+    paddingHorizontal: 5,
+    minWidth: "100%",
+    justifyContent: "center",
+  },
+  sectionTitle: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  carouselCard: {
+    backgroundColor: "rgba(255, 255, 255, 0.03)", // Softer background
+    borderRadius: 16, // More modern rounded corners
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.08)", // Softer border
+    overflow: "hidden",
+    marginHorizontal: 7.5, // Center the margin spacing
+    flexShrink: 0, // Prevent card from shrinking
+    // width removed - now set dynamically
+    ...(Platform.OS === "web"
+      ? { boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }
+      : {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+        }),
+  },
+  carouselImage: {
+    width: "100%",
+    height: 140,
+    resizeMode: "cover",
+  },
+  carouselContent: {
+    padding: 16,
+    flex: 1,
+    justifyContent: "space-between",
+  },
+  carouselInfo: {
+    flex: 1,
+  },
+  carouselTitle: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  carouselDate: {
+    color: "#f0d26e", // Updated to new yellow color
+    fontSize: 14,
+    marginBottom: 3,
+  },
+  carouselLocation: {
+    color: "#B8B8B8", // Softer gray
+    fontSize: 12,
+  },
+  buttonContainer: {
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+  },
+  detailsButton: {
+    backgroundColor: "#CD853F", // Changed to darker orange/peru color
+    borderWidth: 0,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8, // More modern rounded corners
+    alignSelf: "flex-end",
+    ...(Platform.OS === "web"
+      ? { boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }
+      : {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+        }),
+  },
+  detailsButtonText: {
+    color: "#FFFFFF", // White text for better contrast
+    fontSize: 12,
+    fontWeight: "600", // Slightly less bold
+    textAlign: "center",
+  },
+  allEventsButton: {
+    backgroundColor: "rgba(240, 210, 110, 0.05)", // Updated to new yellow background
+    borderWidth: 0,
+    paddingVertical: 18, // Slightly more padding
+    paddingHorizontal: 28,
+    marginVertical: 10,
+    alignSelf: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12, // Add rounded corners
+    borderBottomWidth: 2, // Slightly thicker underline
+    borderBottomColor: "rgba(240, 210, 110, 0.4)", // New yellow underline
+  },
+  allEventsText: {
+    color: "#f0d26e", // Updated to new yellow color
+    fontSize: 16,
+    fontWeight: "600", // Slightly less bold
+    textAlign: "center",
+    marginRight: 8,
+  },
+  arrowIcon: {
+    color: "#f0d26e", // Updated to new yellow color
+    fontSize: 18,
+    fontWeight: "600", // Slightly less bold
+  },
+  // Imperfect Card Container
+  imperfectCardContainer: {
+    width: "100%",
+    marginVertical: 30,
+    position: "relative",
+  },
+  topDiagonalBorder: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 2, // Much thinner
+    backgroundColor: "#F4D03F",
+    transform: [{ skewY: "2deg" }], // Opposite direction (positive)
+    zIndex: 1,
+    ...(Platform.OS === "web"
+      ? { boxShadow: "0px 1px 4px rgba(244, 208, 63, 0.2)" }
+      : {
+          shadowColor: "#F4D03F",
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+        }),
+  },
+  bottomDiagonalBorder: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 2, // Much thinner
+    backgroundColor: "#F4D03F",
+    transform: [{ skewY: "-2deg" }], // Opposite direction (negative)
+    zIndex: 1,
+    ...(Platform.OS === "web"
+      ? { boxShadow: "0px -1px 4px rgba(244, 208, 63, 0.2)" }
+      : {
+          shadowColor: "#F4D03F",
+          shadowOffset: { width: 0, height: -1 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+        }),
+  },
+  // Previous Events Card Styles
+  previousEventsCard: {
+    width: "100%",
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    marginVertical: 8,
+  },
+  previousEventsTitle: {
+    color: "#f0d26e", // Updated to new yellow color
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 25,
+    letterSpacing: 1,
+  },
+  previousEventsScrollView: {
+    height: 200,
+    overflow: "hidden",
+  },
+  previousEventsContainer: {
+    paddingHorizontal: 20,
+    flexDirection: "row",
+  },
+  previousEventCard: {
+    width: 150,
+    marginRight: 15,
+    borderRadius: 12,
+    overflow: "hidden",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderWidth: 1,
+    borderColor: "rgba(240, 210, 110, 0.2)", // Updated to new yellow border
+    flexShrink: 0, // Prevent shrinking for infinite scroll
+    ...(Platform.OS === "web"
+      ? { boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)" }
+      : {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.2,
+          shadowRadius: 12,
+        }),
+  },
+  previousEventImage: {
+    width: "100%",
+    height: 120,
+    resizeMode: "cover",
+  },
+  previousEventTitle: {
+    color: "#ffffff",
+    fontSize: 12,
+    fontWeight: "600",
+    textAlign: "center",
+    padding: 10,
+  },
+  // Sponsors Styles
+  sponsorsSection: {
+    width: "100%",
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.02)",
+  },
+  sponsorsTitle: {
+    color: "#ffffff",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 30,
+    letterSpacing: 1,
+  },
+  sponsorsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 15,
+  },
+  sponsorCard: {
+    backgroundColor: "rgba(240, 210, 110, 0.1)", // Updated to new yellow background
+    borderWidth: 1,
+    borderColor: "rgba(240, 210, 110, 0.3)", // Updated to new yellow border
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginBottom: 10,
+    minWidth: 80,
+    alignItems: "center",
+  },
+  sponsorText: {
+    color: "#f0d26e", // Updated to new yellow color
+    fontSize: 11,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  featuredSectionContainer: {
+    marginTop: 30,
+    marginBottom: 15,
+    alignItems: "center",
+  },
+  featuredSectionTitle: {
+    color: "#f0d26e",
+    fontSize: 24,
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: 8,
+    letterSpacing: 0.5,
+  },
+  featuredSectionNote: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontSize: 14,
+    textAlign: "center",
+    fontStyle: "italic",
+    maxWidth: 300,
+  },
+});

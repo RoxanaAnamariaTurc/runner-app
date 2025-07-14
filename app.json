@@ -1,29 +1,50 @@
 {
   "expo": {
-    "name": "crosul_sperantei",
+    "scheme": "crosul",
+    "name": "Crosul Speranței Blaj",
     "slug": "crosul_sperantei",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/logo-crosul.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/images/logo-crosul.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1f3e25"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/images/logo-crosul.png"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/logo-crosul.png",
+        "backgroundColor": "#1f3e25"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "icon": "./assets/images/logo-crosul.png"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/images/logo-crosul.png",
+      "bundler": "metro",
+      "output": "static",
+      "meta": {
+        "title": "Crosul Speranței Blaj",
+        "description": "Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă. Alătură-te celei de-a VI-a ediții a Crosului Speranței!",
+        "keywords": "cros, Blaj, Alba, alergare, caritate, sport, evenimente, speranța",
+        "author": "Crosul Speranței Blaj",
+        "image": "./assets/images/logo-crosul.png",
+        "og:title": "Crosul Speranței Blaj - Editia a VI-a",
+        "og:description": "Alătură-te celei de-a VI-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil.",
+        "og:image": "./assets/images/logo-crosul.png",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Crosul Speranței Blaj",
+        "twitter:description": "Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă.",
+        "twitter:image": "./assets/images/logo-crosul.png"
+      }
+    },
+    "plugins": ["expo-router"]
   }
 }
