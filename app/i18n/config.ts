@@ -90,7 +90,7 @@ const resources = {
       blajAmbassadors: '🏃‍♂️ Blaj: 20 ambassadors, 1500+ km "auctioned"',
       viaScriptorum: '4. "Via Scriptorum" Project',
       viaScriptorumDescription:
-        "Promoting written culture through track games inspired by",
+        "Promoting written culture through track games inspired by local writers.",
 
       // Event Data
       // Event 1 - Crosul Sperantei
@@ -299,7 +299,7 @@ const resources = {
       blajAmbassadors: '🏃‍♂️ Blaj: 20 ambasadori, 1500+ km "licitați"',
       viaScriptorum: '4. Proiect "Via Scriptorum"',
       viaScriptorumDescription:
-        "Promovarea culturii scrise prin jocuri de pistă inspirate din",
+        "Promovarea culturii scrise prin jocuri de pistă inspirate din scriitori locali.",
 
       // Event Data
       // Event 1 - Crosul Sperantei

@@ -88,7 +88,6 @@ const About = () => {
             <Text style={styles.projectTitle}>{t("viaScriptorum")}</Text>
             <Text style={styles.projectDescription}>
               {t("viaScriptorumDescription")}
-              scriitori locali.
             </Text>
             <View style={styles.projectDetails}>
               <Text style={styles.projectItem}>
