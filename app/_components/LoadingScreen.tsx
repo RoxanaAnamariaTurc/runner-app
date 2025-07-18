@@ -10,11 +10,40 @@ import {
 } from "react-native";
 import { useTranslation } from "react-i18next";
 
-export default function LoadingScreen() {
+interface LoadingScreenProps {
+  loadingProgress?: {
+    translations: boolean;
+    dom: boolean;
+    fonts: boolean;
+    images: boolean;
+    network: boolean;
+  };
+}
+
+export default function LoadingScreen({ loadingProgress }: LoadingScreenProps) {
   const { t } = useTranslation();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const spinValue = useRef(new Animated.Value(0)).current;
+
+  // Calculate progress percentage
+  const totalItems = 5;
+  const completedItems = loadingProgress
+    ? Object.values(loadingProgress).filter(Boolean).length
+    : 0;
+  const progressPercentage = Math.round((completedItems / totalItems) * 100);
+
+  // Get current loading stage
+  const getCurrentStage = () => {
+    if (!loadingProgress) return t("loading");
+
+    if (!loadingProgress.translations) return "Preparing translations...";
+    if (!loadingProgress.dom) return "Loading resources...";
+    if (!loadingProgress.fonts) return "Loading fonts...";
+    if (!loadingProgress.images) return "Loading images...";
+    if (!loadingProgress.network) return "Finalizing...";
+    return "Ready!";
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -94,7 +123,20 @@ export default function LoadingScreen() {
 
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#f0d26e" />
-          <Text style={styles.loadingText}>{t("loading")}</Text>
+          <Text style={styles.loadingText}>{getCurrentStage()}</Text>
+          {loadingProgress && (
+            <View style={styles.progressContainer}>
+              <View style={styles.progressBar}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    { width: `${progressPercentage}%` },
+                  ]}
+                />
+              </View>
+              <Text style={styles.progressText}>{progressPercentage}%</Text>
+            </View>
+          )}
         </View>
       </Animated.View>
       <View style={styles.bottomDecoration}>
@@ -192,5 +234,28 @@ const styles = StyleSheet.create({
     height: 3,
     backgroundColor: "#f0d26e",
     borderRadius: 2,
+  },
+  progressContainer: {
+    alignItems: "center",
+    marginTop: 15,
+    width: 200,
+  },
+  progressBar: {
+    width: "100%",
+    height: 4,
+    backgroundColor: "rgba(240, 210, 110, 0.2)",
+    borderRadius: 2,
+    overflow: "hidden",
+    marginBottom: 8,
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#f0d26e",
+    borderRadius: 2,
+  },
+  progressText: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontSize: 12,
+    fontWeight: "500",
   },
 });

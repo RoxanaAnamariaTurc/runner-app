@@ -12,16 +12,23 @@ import {
 import React, { useRef, useState, useEffect } from "react";
 import { router } from "expo-router";
 import Footer from "./_components/Footer";
+import LazyImage from "./_components/LazyImage";
 import { eventsData, Event } from "./data/events";
 import { LinearGradient } from "expo-linear-gradient";
 import { previousEventsData } from "./data/previousEvents";
 import { useTranslation } from "react-i18next";
+import { imagePerformance } from "./utils/imagePerformance";
 
 import sponsorsData from "./data/sponsorData";
 
 export default function Home() {
   const { t } = useTranslation();
   const featuredEvents = eventsData.filter((event) => event.featured);
+
+  // Initialize performance tracking for previous events images
+  React.useEffect(() => {
+    imagePerformance.startTracking(previousEventsData.length);
+  }, []);
 
   // Helper function to get translated event data
   const getTranslatedEventData = (event: Event) => {
@@ -146,22 +153,32 @@ export default function Home() {
           },
         ]}
       >
-        <Animated.Image
-          source={event.image}
-          style={[
-            styles.previousEventImage,
-            {
-              transform: [
-                {
-                  scale: scrollAnimation.interpolate({
-                    inputRange: [0, 0.5, 1],
-                    outputRange: [1, 1.02, 1],
-                  }),
-                },
-              ],
-            },
-          ]}
-        />
+        <Animated.View
+          style={{
+            transform: [
+              {
+                scale: scrollAnimation.interpolate({
+                  inputRange: [0, 0.5, 1],
+                  outputRange: [1, 1.02, 1],
+                }),
+              },
+            ],
+          }}
+        >
+          <LazyImage
+            source={event.image}
+            style={styles.previousEventImage}
+            resizeMode="cover"
+            threshold={150} // Start loading when 150px from viewport
+            placeholder={
+              <View
+                style={[styles.previousEventImage, styles.imagePlaceholder]}
+              >
+                {/* Custom placeholder that matches the image dimensions */}
+              </View>
+            }
+          />
+        </Animated.View>
         <Text style={styles.previousEventTitle}>{event.title}</Text>
       </Animated.View>
     ));
@@ -577,5 +594,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontStyle: "italic",
     maxWidth: 300,
+  },
+  imagePlaceholder: {
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
   },
 });
