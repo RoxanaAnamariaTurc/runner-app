@@ -6,41 +6,54 @@ import {
   StyleSheet,
   Animated,
   ActivityIndicator,
-  Dimensions,
+  Platform,
 } from "react-native";
-
-const { width, height } = Dimensions.get("window");
+import { useTranslation } from "react-i18next";
 
 export default function LoadingScreen() {
+  const { t } = useTranslation();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const spinValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Start animations
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        tension: 50,
-        friction: 8,
-        useNativeDriver: true,
-      }),
-    ]).start();
+    let isMounted = true;
 
-    // Spinning animation for the accent circle
-    Animated.loop(
-      Animated.timing(spinValue, {
-        toValue: 1,
-        duration: 2000,
-        useNativeDriver: true,
-      })
-    ).start();
-  }, []);
+    // Start animations only if component is still mounted
+    if (isMounted) {
+      // Slightly staggered animation start for smoother experience
+      setTimeout(() => {
+        if (isMounted) {
+          Animated.parallel([
+            Animated.timing(fadeAnim, {
+              toValue: 1,
+              duration: 800, // Slightly longer for smoother fade
+              useNativeDriver: true,
+            }),
+            Animated.spring(scaleAnim, {
+              toValue: 1,
+              tension: 50, // Reduced tension for smoother spring
+              friction: 8,
+              useNativeDriver: true,
+            }),
+          ]).start();
+
+          // Spinning animation for the accent circle
+          Animated.loop(
+            Animated.timing(spinValue, {
+              toValue: 1,
+              duration: 3000, // Slower rotation for less distraction
+              useNativeDriver: true,
+            })
+          ).start();
+        }
+      }, 100); // Small delay to ensure smooth mounting
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [fadeAnim, scaleAnim, spinValue]);
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
@@ -49,10 +62,7 @@ export default function LoadingScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Background gradient effect */}
       <View style={styles.backgroundGradient} />
-
-      {/* Main content */}
       <Animated.View
         style={[
           styles.content,
@@ -62,7 +72,6 @@ export default function LoadingScreen() {
           },
         ]}
       >
-        {/* Logo container */}
         <View style={styles.logoContainer}>
           <View style={styles.logoBackground}>
             <Image
@@ -71,8 +80,6 @@ export default function LoadingScreen() {
               resizeMode="contain"
             />
           </View>
-
-          {/* Spinning accent circle */}
           <Animated.View
             style={[
               styles.accentCircle,
@@ -82,19 +89,14 @@ export default function LoadingScreen() {
             ]}
           />
         </View>
-
-        {/* Title */}
-        <Text style={styles.title}>CROSUL SPERANȚEI</Text>
+        <Text style={styles.title}>{t("mainTitle")}</Text>
         <Text style={styles.subtitle}>BLAJ</Text>
 
-        {/* Loading indicator */}
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#f0d26e" />
-          <Text style={styles.loadingText}>Se încarcă...</Text>
+          <Text style={styles.loadingText}>{t("loading")}</Text>
         </View>
       </Animated.View>
-
-      {/* Bottom decoration */}
       <View style={styles.bottomDecoration}>
         <View style={styles.decorationLine} />
       </View>

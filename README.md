@@ -97,6 +97,31 @@ Once the development server is running, you can:
 - `npm run ios` - Start and open on iOS
 - `npm run web` - Start and open in web browser
 
+## 🚀 Deployment
+
+### Web Deployment (Netlify)
+
+The app is configured for automatic deployment to Netlify:
+
+1. **Connect Repository**: Link your GitHub repo to Netlify
+2. **Build Settings**:
+   - Build command: `npx expo export --platform web`
+   - Publish directory: `dist`
+   - Node version: `18`
+3. **Auto Deploy**: Every push to `main` branch triggers a new deployment
+
+### Manual Web Build
+
+To build for web locally:
+
+```bash
+# Build for web
+npx expo export --platform web
+
+# The built files will be in the 'dist' folder
+# You can then deploy the 'dist' folder to any static hosting service
+```
+
 ## 📱 Platform Support
 
 - **iOS**: Native iOS application

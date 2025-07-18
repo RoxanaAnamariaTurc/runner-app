@@ -101,24 +101,43 @@
         justify-content: center;
         align-items: center;
         z-index: 9999;
+        transition: opacity 0.6s ease-out;
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
       }
 
       .loading-logo {
         width: 120px;
         height: 60px;
         object-fit: contain;
-        animation: pulse 2s infinite;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .loading-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-align: center;
       }
 
       @keyframes pulse {
         0% {
-          opacity: 0.5;
+          opacity: 0.6;
+          transform: scale(0.95);
         }
         50% {
           opacity: 1;
+          transform: scale(1);
         }
         100% {
-          opacity: 0.5;
+          opacity: 0.6;
+          transform: scale(0.95);
         }
       }
     </style>
@@ -126,28 +145,43 @@
   <body>
     <div id="root">
       <div class="loading-screen" id="loading-screen">
-        <img
-          src="./assets/images/logo-crosul.png"
-          alt="Crosul Speranței Blaj"
-          class="loading-logo"
-        />
+        <div class="loading-container">
+          <img
+            src="./assets/images/logo-crosul.png"
+            alt="Crosul Speranței Blaj"
+            class="loading-logo"
+          />
+          <div class="loading-text">Se încarcă...</div>
+        </div>
       </div>
     </div>
 
     <script>
-      // Hide loading screen once app loads
-      window.addEventListener("load", function () {
+      // Enhanced loading screen management
+      (function () {
+        // Prevent auto-hide - let React handle it
+        let loadingElement = document.getElementById("loading-screen");
+
+        // Add a failsafe in case React doesn't load
         setTimeout(function () {
-          const loadingScreen = document.getElementById("loading-screen");
-          if (loadingScreen) {
-            loadingScreen.style.opacity = "0";
-            loadingScreen.style.transition = "opacity 0.5s ease-out";
+          if (loadingElement && loadingElement.style.display !== "none") {
+            loadingElement.style.opacity = "0";
             setTimeout(function () {
-              loadingScreen.style.display = "none";
-            }, 500);
+              loadingElement.style.display = "none";
+            }, 600);
           }
-        }, 1000);
-      });
+        }, 8000); // 8 second failsafe
+
+        // Listen for React app readiness
+        window.addEventListener("app-ready", function () {
+          if (loadingElement) {
+            loadingElement.style.opacity = "0";
+            setTimeout(function () {
+              loadingElement.style.display = "none";
+            }, 600);
+          }
+        });
+      })();
     </script>
   </body>
 </html>

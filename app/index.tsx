@@ -15,9 +15,26 @@ import Footer from "./_components/Footer";
 import { eventsData, Event } from "./data/events";
 import { LinearGradient } from "expo-linear-gradient";
 import { previousEventsData } from "./data/previousEvents";
+import { useTranslation } from "react-i18next";
+
+import sponsorsData from "./data/sponsorData";
 
 export default function Home() {
+  const { t } = useTranslation();
   const featuredEvents = eventsData.filter((event) => event.featured);
+
+  // Helper function to get translated event data
+  const getTranslatedEventData = (event: Event) => {
+    const eventKey = `event${event.id}`;
+    return {
+      title: t(`${eventKey}Title`, { defaultValue: event.title }),
+      date: t(`${eventKey}Date`, { defaultValue: event.date }),
+      location: t(`${eventKey}Location`, { defaultValue: event.location }),
+      description: t(`${eventKey}Description`, {
+        defaultValue: event.description,
+      }),
+    };
+  };
   const arrowAnimation = useRef(new Animated.Value(0)).current;
   const scrollAnimation = useRef(new Animated.Value(0)).current;
   const [screenData, setScreenData] = useState(Dimensions.get("window"));
@@ -31,25 +48,23 @@ export default function Home() {
     return () => subscription?.remove();
   }, []);
 
-  // Start arrow animation when component mounts
   React.useEffect(() => {
     const animate = () => {
       Animated.sequence([
         Animated.timing(arrowAnimation, {
           toValue: 1,
           duration: 1000,
-          useNativeDriver: Platform.OS !== "web", // Disable native driver on web
+          useNativeDriver: Platform.OS !== "web",
         }),
         Animated.timing(arrowAnimation, {
           toValue: 0,
           duration: 1000,
-          useNativeDriver: Platform.OS !== "web", // Disable native driver on web
+          useNativeDriver: Platform.OS !== "web",
         }),
       ]).start(() => animate());
     };
     animate();
 
-    // Start continuous scroll animation for previous events
     const scrollAnimate = () => {
       scrollAnimation.setValue(0);
       Animated.loop(
@@ -58,7 +73,7 @@ export default function Home() {
           duration: 60000, // 60 seconds - slower animation for 26 images
           useNativeDriver: Platform.OS !== "web",
         }),
-        { iterations: -1 } // Infinite loop
+        { iterations: -1 }
       ).start();
     };
     scrollAnimate();
@@ -83,21 +98,25 @@ export default function Home() {
 
   const renderFeaturedEvent = (item: Event) => {
     const cardWidth = getCardWidth();
+    const translatedEvent = getTranslatedEventData(item);
+
     return (
       <View key={item.id} style={[styles.carouselCard, { width: cardWidth }]}>
         <Image source={item.image} style={styles.carouselImage} />
         <View style={styles.carouselContent}>
           <View style={styles.carouselInfo}>
-            <Text style={styles.carouselTitle}>{item.title}</Text>
-            <Text style={styles.carouselDate}>{item.date}</Text>
-            <Text style={styles.carouselLocation}>{item.location}</Text>
+            <Text style={styles.carouselTitle}>{translatedEvent.title}</Text>
+            <Text style={styles.carouselDate}>{translatedEvent.date}</Text>
+            <Text style={styles.carouselLocation}>
+              {translatedEvent.location}
+            </Text>
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.detailsButton}
               onPress={() => router.push(`/event-details?id=${item.id}`)}
             >
-              <Text style={styles.detailsButtonText}>DETALII</Text>
+              <Text style={styles.detailsButtonText}>{t("details")}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -106,14 +125,13 @@ export default function Home() {
   };
 
   const renderPreviousEvents = () => {
-    // Use double the events array for seamless infinite scroll with 26 images
     const doubleEvents = [...previousEventsData, ...previousEventsData];
-    const cardWidth = 165; // Width of each card + margin
+    const cardWidth = 165;
     const totalWidth = previousEventsData.length * cardWidth;
 
     const translateX = scrollAnimation.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, -totalWidth], // Scroll exactly one set width
+      outputRange: [0, -totalWidth],
     });
 
     return doubleEvents.map((event, index) => (
@@ -149,29 +167,6 @@ export default function Home() {
     ));
   };
 
-  const sponsorsData = [
-    "NLA",
-    "Apidava",
-    "JIDVEI",
-    "DECATHLON",
-    "BOSCH",
-    "ALPIN 57",
-    "GENERALI",
-    "WII",
-    "MONTANA POPA",
-    "FJTA",
-    "DARA TRANSILVANIA",
-    "AMMA CLINIQUE",
-    "CAFEA",
-    "SALON GEORGIA AIUD",
-    "CASANDRA",
-    "SOFIA STORE",
-    "ANIMAL FERMA",
-    "DEPO MARKET",
-    "CLUB BLAJ",
-    "CROSUL SPERANTEI",
-  ];
-
   const renderSponsors = () => {
     return sponsorsData.map((sponsor, index) => (
       <View key={index} style={styles.sponsorCard}>
@@ -187,18 +182,18 @@ export default function Home() {
       >
         <View style={styles.content}>
           <View style={styles.titleContainer}>
-            <Text style={styles.mainTitle}>CROSUL SPERANTEI BLAJ</Text>
+            <Text style={styles.mainTitle}>{t("mainTitle")}</Text>
             <View style={styles.titleDivider} />
-            <Text style={styles.subtitle}>Editia a VIII -a</Text>
+            <Text style={styles.subtitle}>{t("subtitle")}</Text>
           </View>
 
           {/* Featured Events Section */}
           <View style={styles.featuredSectionContainer}>
             <Text style={styles.featuredSectionTitle}>
-              Evenimente în desfășurare
+              {t("featuredEventsTitle")}
             </Text>
             <Text style={styles.featuredSectionNote}>
-              Unele evenimente sunt în desfășurare și te poți alătura oricând!
+              {t("featuredEventsNote")}
             </Text>
           </View>
 
@@ -224,7 +219,7 @@ export default function Home() {
             style={styles.allEventsButton}
             onPress={() => router.push("/events")}
           >
-            <Text style={styles.allEventsText}>Toate Evenimentele</Text>
+            <Text style={styles.allEventsText}>{t("allEvents")}</Text>
             <Animated.Text
               style={[
                 styles.arrowIcon,
@@ -247,7 +242,7 @@ export default function Home() {
               style={styles.previousEventsCard}
             >
               <Text style={styles.previousEventsTitle}>
-                Evenimente Precedente
+                {t("previousEventsTitle")}
               </Text>
               <View style={styles.previousEventsScrollView}>
                 <View style={styles.previousEventsContainer}>
@@ -255,14 +250,11 @@ export default function Home() {
                 </View>
               </View>
             </LinearGradient>
-
-            {/* Bottom diagonal border */}
-            {/* <View style={styles.bottomDiagonalBorder} /> */}
           </View>
 
           {/* Sponsors Section */}
           <View style={styles.sponsorsSection}>
-            <Text style={styles.sponsorsTitle}>Partenerii Noștri</Text>
+            <Text style={styles.sponsorsTitle}>{t("partnersTitle")}</Text>
             <View style={styles.sponsorsGrid}>{renderSponsors()}</View>
           </View>
         </View>
@@ -276,7 +268,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1f3e25", // Back to solid dark green
+    backgroundColor: "#1f3e25",
   },
   mainScrollView: {
     flex: 1,
@@ -285,8 +277,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: Platform.OS === "web" ? 0 : 20, // Test: no padding on web
-    paddingBottom: 40, // Add bottom padding for better scroll experience
+    paddingTop: Platform.OS === "web" ? 0 : 20,
+    paddingBottom: 40,
   },
   titleContainer: {
     alignItems: "center",
@@ -302,12 +294,12 @@ const styles = StyleSheet.create({
   titleDivider: {
     width: 120,
     height: 2,
-    backgroundColor: "rgba(231, 76, 60, 0.3)", // Modern softer red
+    backgroundColor: "rgba(231, 76, 60, 0.3)",
     marginTop: 8,
     marginBottom: 8,
   },
   subtitle: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 14,
     textAlign: "center",
     marginTop: 5,
@@ -315,9 +307,9 @@ const styles = StyleSheet.create({
   },
   carouselContainer: {
     marginTop: 20,
-    marginBottom: 30, // Increased margin for better spacing
+    marginBottom: 30,
     height: 350,
-    width: "100%", // Ensure full width
+    width: "100%",
   },
   scrollContainer: {
     paddingHorizontal: 10,
@@ -337,14 +329,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   carouselCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.03)", // Softer background
-    borderRadius: 16, // More modern rounded corners
+    backgroundColor: "rgba(255, 255, 255, 0.03)",
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)", // Softer border
+    borderColor: "rgba(255, 255, 255, 0.08)",
     overflow: "hidden",
-    marginHorizontal: 7.5, // Center the margin spacing
-    flexShrink: 0, // Prevent card from shrinking
-    // width removed - now set dynamically
+    marginHorizontal: 7.5,
+    flexShrink: 0,
     ...(Platform.OS === "web"
       ? { boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }
       : {
@@ -374,12 +365,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   carouselDate: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 14,
     marginBottom: 3,
   },
   carouselLocation: {
-    color: "#B8B8B8", // Softer gray
+    color: "#B8B8B8",
     fontSize: 12,
   },
   buttonContainer: {
@@ -387,11 +378,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   detailsButton: {
-    backgroundColor: "#CD853F", // Changed to darker orange/peru color
+    backgroundColor: "#CD853F",
     borderWidth: 0,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 8, // More modern rounded corners
+    borderRadius: 8,
     alignSelf: "flex-end",
     ...(Platform.OS === "web"
       ? { boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }
@@ -403,38 +394,37 @@ const styles = StyleSheet.create({
         }),
   },
   detailsButtonText: {
-    color: "#FFFFFF", // White text for better contrast
+    color: "#FFFFFF",
     fontSize: 12,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
     textAlign: "center",
   },
   allEventsButton: {
-    backgroundColor: "rgba(240, 210, 110, 0.05)", // Updated to new yellow background
+    backgroundColor: "rgba(240, 210, 110, 0.05)",
     borderWidth: 0,
-    paddingVertical: 18, // Slightly more padding
+    paddingVertical: 18,
     paddingHorizontal: 28,
     marginVertical: 10,
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 12, // Add rounded corners
-    borderBottomWidth: 2, // Slightly thicker underline
-    borderBottomColor: "rgba(240, 210, 110, 0.4)", // New yellow underline
+    borderRadius: 12,
+    borderBottomWidth: 2,
+    borderBottomColor: "rgba(240, 210, 110, 0.4)",
   },
   allEventsText: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 16,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
     textAlign: "center",
     marginRight: 8,
   },
   arrowIcon: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 18,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
   },
-  // Imperfect Card Container
   imperfectCardContainer: {
     width: "100%",
     marginVertical: 30,
@@ -445,9 +435,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 2, // Much thinner
+    height: 2,
     backgroundColor: "#F4D03F",
-    transform: [{ skewY: "2deg" }], // Opposite direction (positive)
+    transform: [{ skewY: "2deg" }],
     zIndex: 1,
     ...(Platform.OS === "web"
       ? { boxShadow: "0px 1px 4px rgba(244, 208, 63, 0.2)" }
@@ -463,9 +453,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 2, // Much thinner
+    height: 2,
     backgroundColor: "#F4D03F",
-    transform: [{ skewY: "-2deg" }], // Opposite direction (negative)
+    transform: [{ skewY: "-2deg" }],
     zIndex: 1,
     ...(Platform.OS === "web"
       ? { boxShadow: "0px -1px 4px rgba(244, 208, 63, 0.2)" }
@@ -476,7 +466,7 @@ const styles = StyleSheet.create({
           shadowRadius: 4,
         }),
   },
-  // Previous Events Card Styles
+
   previousEventsCard: {
     width: "100%",
     paddingVertical: 40,
@@ -484,7 +474,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   previousEventsTitle: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
@@ -506,8 +496,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderWidth: 1,
-    borderColor: "rgba(240, 210, 110, 0.2)", // Updated to new yellow border
-    flexShrink: 0, // Prevent shrinking for infinite scroll
+    borderColor: "rgba(240, 210, 110, 0.2)",
+    flexShrink: 0,
     ...(Platform.OS === "web"
       ? { boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)" }
       : {
@@ -552,9 +542,9 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   sponsorCard: {
-    backgroundColor: "rgba(240, 210, 110, 0.1)", // Updated to new yellow background
+    backgroundColor: "rgba(240, 210, 110, 0.1)",
     borderWidth: 1,
-    borderColor: "rgba(240, 210, 110, 0.3)", // Updated to new yellow border
+    borderColor: "rgba(240, 210, 110, 0.3)",
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -563,7 +553,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   sponsorText: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 11,
     fontWeight: "600",
     textAlign: "center",

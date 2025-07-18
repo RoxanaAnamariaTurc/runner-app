@@ -12,51 +12,82 @@ import {
 import React from "react";
 import { useLocalSearchParams, router } from "expo-router";
 import { eventsData, Event } from "./data/events";
+import { getCurrentPrices } from "./utils/pricing";
 import { LinearGradient } from "expo-linear-gradient";
-
-const { width } = Dimensions.get("window");
+import { useTranslation } from "react-i18next";
+import PricingInfo from "./_components/PricingInfo";
 
 export default function EventDetails() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const event = eventsData.find((e) => e.id === parseInt(id || "0"));
 
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Evenimentul nu a fost găsit</Text>
+        <Text style={styles.errorText}>{t("eventNotFound")}</Text>
       </View>
     );
   }
 
+  const eventPrices = event.hasDynamicPricing
+    ? getCurrentPrices()
+    : event.prices;
+
+  // Helper function to get translated event data
+  const getTranslatedEventData = (event: Event) => {
+    const eventKey = `event${event.id}`;
+    return {
+      title: t(`${eventKey}Title`, { defaultValue: event.title }),
+      date: t(`${eventKey}Date`, { defaultValue: event.date }),
+      location: t(`${eventKey}Location`, { defaultValue: event.location }),
+      description: t(`${eventKey}Description`, {
+        defaultValue: event.description,
+      }),
+      detailedDescription: t(`${eventKey}DetailedDescription`, {
+        defaultValue: event.detailedDescription,
+      }),
+    };
+  };
+
+  const translatedEvent = getTranslatedEventData(event);
+
+  // Helper function to translate difficulty levels
+  const translateDifficulty = (difficulty: string) => {
+    // Try to translate using the exact key first, then fallback to original
+    return t(difficulty, { defaultValue: difficulty });
+  };
+
+  // Helper function to translate price labels
+  const translatePriceLabel = (key: string) => {
+    // Try to translate using the exact key first, then fallback to original
+    return t(key, { defaultValue: key });
+  };
+
   const handleRegistration = () => {
     if (event.registrationUrl) {
       Linking.openURL(event.registrationUrl);
-    } else {
-      // Fallback - you can replace this with your actual registration logic
-      Linking.openURL(
-        "mailto:contact@crosulsperantei.ro?subject=Înregistrare " + event.title
-      );
     }
   };
 
   const renderDifficultyPill = (difficulty: string, index: number) => (
     <View key={index} style={styles.difficultyPill}>
-      <Text style={styles.difficultyText}>{difficulty}</Text>
+      <Text style={styles.difficultyText}>
+        {translateDifficulty(difficulty)}
+      </Text>
     </View>
   );
 
   const renderPriceItem = (key: string, value: string) => (
     <View key={key} style={styles.priceRow}>
-      <Text style={styles.priceLabel}>
-        {key.charAt(0).toUpperCase() + key.slice(1)}:
-      </Text>
-      <Text style={styles.priceValue}>{value}</Text>
+      <Text style={styles.priceLabel}>{translatePriceLabel(key)}:</Text>
+      <Text style={styles.priceValue}>{t(value, { defaultValue: value })}</Text>
     </View>
   );
 
   const renderDistanceItem = (distance: string, index: number) => (
     <Text key={index} style={styles.distanceItem}>
-      • {distance}
+      • {t(distance, { defaultValue: distance })}
     </Text>
   );
 
@@ -76,30 +107,32 @@ export default function EventDetails() {
         <View style={styles.content}>
           {/* Title and Basic Info */}
           <View style={styles.titleSection}>
-            <Text style={styles.title}>{event.title}</Text>
+            <Text style={styles.title}>{translatedEvent.title}</Text>
             <View style={styles.basicInfo}>
               <View style={styles.infoRow}>
                 <Text style={styles.infoIcon}>📅</Text>
                 <Text style={styles.infoText}>
-                  {event.date} • {event.startTime}
+                  {translatedEvent.date} • {event.startTime}
                 </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoIcon}>📍</Text>
-                <Text style={styles.infoText}>{event.location}</Text>
+                <Text style={styles.infoText}>{translatedEvent.location}</Text>
               </View>
             </View>
           </View>
 
           {/* Description */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Despre Eveniment</Text>
-            <Text style={styles.description}>{event.detailedDescription}</Text>
+            <Text style={styles.sectionTitle}>{t("aboutEvent")}</Text>
+            <Text style={styles.description}>
+              {translatedEvent.detailedDescription}
+            </Text>
           </View>
 
           {/* Difficulty Levels */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Nivel de Dificultate</Text>
+            <Text style={styles.sectionTitle}>{t("difficultyLevel")}</Text>
             <View style={styles.difficultyContainer}>
               {event.difficulty.map(renderDifficultyPill)}
             </View>
@@ -107,7 +140,7 @@ export default function EventDetails() {
 
           {/* Distances */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Distanțe Disponibile</Text>
+            <Text style={styles.sectionTitle}>{t("availableDistances")}</Text>
             <View style={styles.distancesContainer}>
               {event.distances.map(renderDistanceItem)}
             </View>
@@ -115,11 +148,15 @@ export default function EventDetails() {
 
           {/* Prices */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Prețuri Înregistrare</Text>
+            <Text style={styles.sectionTitle}>{t("registrationPrices")}</Text>
+
+            {/* Show dynamic pricing info for main event */}
+            {event.hasDynamicPricing && <PricingInfo />}
+
             <View style={styles.pricesContainer}>
-              {Object.entries(event.prices).map(([key, value]) =>
-                renderPriceItem(key, value)
-              )}
+              {Object.entries(eventPrices)
+                .filter(([key]) => key !== "period")
+                .map(([key, value]) => renderPriceItem(key, value))}
             </View>
           </View>
 
@@ -128,7 +165,9 @@ export default function EventDetails() {
             style={styles.registerButton}
             onPress={handleRegistration}
           >
-            <Text style={styles.registerButtonText}>ÎNREGISTREAZĂ-TE</Text>
+            <Text style={styles.registerButtonText}>
+              {t("register").toUpperCase()}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -139,7 +178,7 @@ export default function EventDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1f3e25", // Back to solid dark green
+    backgroundColor: "#1f3e25",
   },
   scrollView: {
     flex: 1,
@@ -148,7 +187,7 @@ const styles = StyleSheet.create({
     position: "relative",
     height: 250,
     width: "100%",
-    marginTop: Platform.OS === "web" ? 0 : 0, // Test: ensure no margin
+    marginTop: Platform.OS === "web" ? 0 : 0,
   },
   headerImage: {
     width: "100%",
@@ -170,7 +209,7 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
     paddingBottom: 40,
-    paddingTop: Platform.OS === "web" ? 0 : 20, // Test: no top padding on web
+    paddingTop: Platform.OS === "web" ? 0 : 20,
   },
   titleSection: {
     marginBottom: 25,
@@ -194,7 +233,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   infoText: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 16,
     fontWeight: "500",
   },
@@ -202,7 +241,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   sectionTitle: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 12,
@@ -220,7 +259,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   difficultyPill: {
-    backgroundColor: "rgba(240, 210, 110, 0.15)", // Updated to new yellow
+    backgroundColor: "rgba(240, 210, 110, 0.15)",
     borderColor: "rgba(240, 210, 110, 0.3)",
     borderWidth: 1,
     paddingHorizontal: 16,
@@ -228,7 +267,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   difficultyText: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 14,
     fontWeight: "500",
   },
@@ -258,19 +297,19 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   priceValue: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 15,
     fontWeight: "600",
   },
   registerButton: {
-    backgroundColor: "#B8860B", // Dark mustard yellow
+    backgroundColor: "#B8860B",
     borderRadius: 12,
     paddingVertical: 16,
     paddingHorizontal: 24,
     alignItems: "center",
     marginTop: 10,
-    alignSelf: Platform.OS === "web" ? "flex-end" : "stretch", // Right align on web, full width on mobile
-    maxWidth: Platform.OS === "web" ? 250 : "100%", // Limit width on web
+    alignSelf: Platform.OS === "web" ? "flex-end" : "stretch",
+    maxWidth: Platform.OS === "web" ? 250 : "100%",
     ...(Platform.OS === "web"
       ? { boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)" }
       : {

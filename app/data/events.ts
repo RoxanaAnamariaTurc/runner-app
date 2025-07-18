@@ -1,3 +1,5 @@
+import { getCurrentPrices } from "../utils/pricing";
+
 export const eventsData: Event[] = [
   {
     id: 1,
@@ -11,14 +13,11 @@ export const eventsData: Event[] = [
     detailedDescription:
       "Alătură-te celei de-a VIII-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil. Acest cros nu este doar o competiție, ci o mișcare de solidaritate pentru susținerea persoanelor cu dizabilități din comunitatea noastră.",
     difficulty: ["Incepator", "Intermediar", "Avansat"],
-    prices: {
-      copii: "Gratuit (sub 12 ani)",
-      amatori: "TBC RON",
-      semimaraton: "TBC RON",
-    },
+    prices: getCurrentPrices(), // Dynamic pricing based on current date
     distances: ["3 km", "10 km", "21 km (semimaraton)"],
     startTime: "09:00",
     registrationUrl: "https://racetime.ro/events/153/register",
+    hasDynamicPricing: true, // Flag to indicate this event uses dynamic pricing
   },
   {
     id: 2,
@@ -93,6 +92,7 @@ export type Event = {
   distances: string[];
   startTime: string;
   registrationUrl: string;
+  hasDynamicPricing?: boolean; // Optional flag for dynamic pricing
 };
 
 // Add a default export to prevent route warning

@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
 import Footer from "./_components/Footer";
-import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "react-i18next";
 
 const About = () => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -12,159 +14,119 @@ const About = () => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>
-            🏃‍♂️ Asociația Clubul Sportiv Running & Cycling Club Blaj
-          </Text>
-          <Text style={styles.founded}>📅 Fondat: 2017</Text>
+          <Text style={styles.title}>{t("associationTitle")}</Text>
+          <Text style={styles.founded}>{t("founded")}</Text>
         </View>
 
-        {/* Scop */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Scop</Text>
-          <Text style={styles.description}>
-            Promovarea sportului de masă, valorilor culturale și sportive,
-            implicarea în activități caritabile și organizarea de evenimente
-            pentru comunitate, cu sprijinul voluntarilor.
-          </Text>
+          <Text style={styles.sectionTitle}>{t("purpose")}</Text>
+          <Text style={styles.description}>{t("purposeText")}</Text>
         </View>
 
-        {/* Valori */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>💡 Valori</Text>
+          <Text style={styles.sectionTitle}>{t("values")}</Text>
           <View style={styles.valuesPillsContainer}>
             <View style={[styles.valuePill, styles.valuePillYellow]}>
-              <Text style={styles.valuePillText}>Integritate</Text>
+              <Text style={styles.valuePillText}>{t("integrity")}</Text>
             </View>
             <View style={[styles.valuePill, styles.valuePillRed]}>
-              <Text style={styles.valuePillText}>Entuziasm</Text>
+              <Text style={styles.valuePillText}>{t("enthusiasm")}</Text>
             </View>
             <View style={[styles.valuePill, styles.valuePillYellow]}>
-              <Text style={styles.valuePillText}>Pasiune</Text>
+              <Text style={styles.valuePillText}>{t("passion")}</Text>
             </View>
             <View style={[styles.valuePill, styles.valuePillRed]}>
-              <Text style={styles.valuePillText}>Profesionalism</Text>
+              <Text style={styles.valuePillText}>{t("professionalism")}</Text>
             </View>
             <View style={[styles.valuePill, styles.valuePillYellow]}>
-              <Text style={styles.valuePillText}>Spirit de echipă</Text>
+              <Text style={styles.valuePillText}>{t("teamSpirit")}</Text>
             </View>
             <View style={[styles.valuePill, styles.valuePillRed]}>
-              <Text style={styles.valuePillText}>Altruism</Text>
+              <Text style={styles.valuePillText}>{t("altruism")}</Text>
             </View>
           </View>
         </View>
 
-        {/* Proiecte Majore */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🌟 Proiecte Majore</Text>
+          <Text style={styles.sectionTitle}>{t("majorProjects")}</Text>
 
-          {/* Crosul Speranței */}
           <View style={styles.project}>
-            <Text style={styles.projectTitle}>1. Crosul Speranței</Text>
+            <Text style={styles.projectTitle}>{t("crosulSperantei")}</Text>
             <Text style={styles.projectDescription}>
-              Caritate & sport pentru susținerea persoanelor cu Sindrom Down și
-              dizabilități.
+              {t("crosulDescription")}
             </Text>
             <View style={styles.projectDetails}>
-              <Text style={styles.projectItem}>
-                • Ediția I (2017): 666 participanți
-              </Text>
-              <Text style={styles.projectItem}>
-                • Ediția II (2018): 262 adulți, 405 copii
-              </Text>
-              <Text style={styles.projectItem}>
-                • Ediția III (2019): 723 participanți
-              </Text>
+              <Text style={styles.projectItem}>{t("edition1")}</Text>
+              <Text style={styles.projectItem}>{t("edition2")}</Text>
+              <Text style={styles.projectItem}>{t("edition3")}</Text>
             </View>
-            <Text style={styles.probeTitle}>Probe:</Text>
+            <Text style={styles.probeTitle}>{t("races")}</Text>
             <View style={styles.projectDetails}>
-              <Text style={styles.projectItem}>🏃 200m – 1300m copii</Text>
-              <Text style={styles.projectItem}>🏃‍♂️ 2.5 km, 8 km – amatori</Text>
-              <Text style={styles.projectItem}>
-                🏅 Semimaraton 21 km / 26.4 km – avansați
-              </Text>
+              <Text style={styles.projectItem}>{t("childrenRaces")}</Text>
+              <Text style={styles.projectItem}>{t("amateurRaces")}</Text>
+              <Text style={styles.projectItem}>{t("advancedRaces")}</Text>
             </View>
-            <Text style={styles.highlight}>
-              💡 Fondurile strânse au fost donate tinerilor cu dizabilități
+            <Text style={styles.highlight}>{t("donationHighlight")}</Text>
+          </View>
+
+          <View style={styles.project}>
+            <Text style={styles.projectTitle}>{t("giveHopeCampaign")}</Text>
+            <Text style={styles.projectDescription}>
+              {t("giveHopeDescription")}
             </Text>
           </View>
 
-          {/* Campania Dăruiește Speranță */}
           <View style={styles.project}>
-            <Text style={styles.projectTitle}>
-              2. Campania „Dăruiește Speranță"
-            </Text>
+            <Text style={styles.projectTitle}>{t("autism24h")}</Text>
             <Text style={styles.projectDescription}>
-              Distribuie alimente persoanelor izolate (Munții Trascău, Rîmeț),
-              în fiecare an de Paști și Crăciun.
+              {t("autismDescription")}
             </Text>
+            <Text style={styles.projectItem}>{t("blajAmbassadors")}</Text>
           </View>
 
-          {/* Autism 24H */}
           <View style={styles.project}>
-            <Text style={styles.projectTitle}>
-              3. Autism 24H – Marea Neagră
-            </Text>
+            <Text style={styles.projectTitle}>{t("viaScriptorum")}</Text>
             <Text style={styles.projectDescription}>
-              Participare la eveniment național pentru sprijinul copiilor cu
-              autism și Sindrom Down.
-            </Text>
-            <Text style={styles.projectItem}>
-              🏃‍♂️ Blaj: 20 ambasadori, 1500+ km "licitați"
-            </Text>
-          </View>
-
-          {/* Via Scriptorum */}
-          <View style={styles.project}>
-            <Text style={styles.projectTitle}>4. Proiect „Via Scriptorum"</Text>
-            <Text style={styles.projectDescription}>
-              Promovarea culturii scrise prin jocuri de pistă inspirate din
+              {t("viaScriptorumDescription")}
               scriitori locali.
             </Text>
             <View style={styles.projectDetails}>
               <Text style={styles.projectItem}>
-                📚 Colaborare cu 10+ școli și licee
+                {t("viaScriptorumDetails1")}
               </Text>
               <Text style={styles.projectItem}>
-                🎯 100 de tineri participanți
+                {t("viaScriptorumDetails2")}
               </Text>
               <Text style={styles.projectItem}>
-                🏆 Nominalizat la premiile AFCN
+                {t("viaScriptorumDetails3")}
               </Text>
             </View>
           </View>
 
-          {/* Scrisoare Iepurașului */}
           <View style={styles.project}>
-            <Text style={styles.projectTitle}>5. Scrisoare Iepurașului</Text>
+            <Text style={styles.projectTitle}>
+              5. {t("scrisorareIepurasului")}
+            </Text>
             <Text style={styles.projectDescription}>
-              Copii din familii nevoiașe primesc cadouri pe baza scrisorilor
-              colectate înainte de Paști.
+              {t("scrisorareDescription")}
             </Text>
           </View>
 
-          {/* Kids Race */}
           <View style={styles.project}>
-            <Text style={styles.projectTitle}>6. Kids Race (2021)</Text>
+            <Text style={styles.projectTitle}>6. {t("kidsRace2021")}</Text>
             <View style={styles.projectDetails}>
-              <Text style={styles.projectItem}>
-                🚴‍♀️ Competiție de ciclism pentru copii sub 14 ani
-              </Text>
-              <Text style={styles.projectItem}>
-                🗓 6 iulie 2021 – legată de Turul Ciclist al Sibiului
-              </Text>
-              <Text style={styles.projectItem}>👧👦 100 de participanți</Text>
+              <Text style={styles.projectItem}>{t("kidsRaceDetails1")}</Text>
+              <Text style={styles.projectItem}>{t("kidsRaceDetails2")}</Text>
+              <Text style={styles.projectItem}>{t("kidsRaceDetails3")}</Text>
             </View>
           </View>
 
-          {/* Autism24H 2021 */}
           <View style={styles.project}>
-            <Text style={styles.projectTitle}>7. Autism24H 2021</Text>
+            <Text style={styles.projectTitle}>7. {t("autism24h2021")}</Text>
             <View style={styles.projectDetails}>
-              <Text style={styles.projectItem}>🏁 70 echipe naționale</Text>
-              <Text style={styles.projectItem}>
-                🥇 Clubul din Blaj – locul 7 (1209 km alergați)
-              </Text>
-              <Text style={styles.projectItem}>🥉 Locul 3 la km licitați</Text>
+              <Text style={styles.projectItem}>{t("autism24hDetails1")}</Text>
+              <Text style={styles.projectItem}>{t("autism24hDetails2")}</Text>
+              <Text style={styles.projectItem}>{t("autism24hDetails3")}</Text>
             </View>
           </View>
         </View>
@@ -180,7 +142,7 @@ export default About;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1f3e25", // Back to solid dark green
+    backgroundColor: "#1f3e25",
   },
   scrollView: {
     flex: 1,
@@ -196,31 +158,31 @@ const styles = StyleSheet.create({
   title: {
     color: "#ffffff",
     fontSize: 18,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
     textAlign: "center",
     marginBottom: 10,
-    lineHeight: 26, // Increased line height
-    letterSpacing: 0.3, // Add letter spacing
+    lineHeight: 26,
+    letterSpacing: 0.3,
   },
   founded: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 16,
-    fontWeight: "500", // Slightly less bold
+    fontWeight: "500",
   },
   section: {
     marginBottom: 30,
   },
   sectionTitle: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 18,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
     marginBottom: 15,
-    letterSpacing: 0.5, // Add letter spacing
+    letterSpacing: 0.5,
   },
   description: {
-    color: "#E8E8E8", // Softer white
+    color: "#E8E8E8",
     fontSize: 14,
-    lineHeight: 22, // Increased line height for better readability
+    lineHeight: 22,
     textAlign: "justify",
   },
   valuesPillsContainer: {
@@ -231,16 +193,16 @@ const styles = StyleSheet.create({
   },
   valuePill: {
     borderRadius: 20,
-    paddingHorizontal: 18, // Increased padding
-    paddingVertical: 10, // Increased padding
+    paddingHorizontal: 18,
+    paddingVertical: 10,
     borderWidth: 1,
   },
   valuePillYellow: {
-    backgroundColor: "rgba(240, 210, 110, 0.25)", // Updated to new yellow
+    backgroundColor: "rgba(240, 210, 110, 0.25)",
     borderColor: "rgba(240, 210, 110, 0.4)",
   },
   valuePillRed: {
-    backgroundColor: "rgba(135, 206, 250, 0.25)", // Changed to light blue
+    backgroundColor: "rgba(135, 206, 250, 0.25)",
     borderColor: "rgba(135, 206, 250, 0.4)",
   },
   valuePillText: {
@@ -251,22 +213,22 @@ const styles = StyleSheet.create({
   },
   project: {
     marginBottom: 25,
-    padding: 18, // Increased padding
-    backgroundColor: "rgba(255, 255, 255, 0.03)", // Softer background
-    borderRadius: 12, // More modern rounded corners
+    padding: 18,
+    backgroundColor: "rgba(255, 255, 255, 0.03)",
+    borderRadius: 12,
     borderLeftWidth: 3,
-    borderLeftColor: "#f0d26e", // Updated to new yellow color
+    borderLeftColor: "#f0d26e",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
-    shadowRadius: 4, // Add subtle shadow
+    shadowRadius: 4,
   },
   projectTitle: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 16,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
     marginBottom: 10,
-    letterSpacing: 0.3, // Add letter spacing
+    letterSpacing: 0.3,
   },
   projectDescription: {
     color: "#ffffff",
@@ -286,13 +248,13 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   probeTitle: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 14,
     fontWeight: "bold",
     marginBottom: 5,
   },
   highlight: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 13,
     fontStyle: "italic",
     marginTop: 10,

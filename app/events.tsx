@@ -12,45 +12,66 @@ import React from "react";
 import { router } from "expo-router";
 import Footer from "./_components/Footer";
 import { eventsData, Event } from "./data/events";
-import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 const isWeb = Platform.OS === "web";
 const isLargeScreen = width > 768;
 
 export default function Events() {
-  const renderEventCard = (event: Event, index: number) => (
-    <TouchableOpacity
-      key={event.id}
-      style={[
-        styles.eventCard,
-        isWeb && isLargeScreen && styles.webEventCard,
-        isWeb &&
-          isLargeScreen &&
-          index % 3 !== 2 &&
-          styles.webEventCardWithMargin,
-      ]}
-    >
-      <Image source={event.image} style={styles.eventImage} />
-      <View style={styles.eventContent}>
-        <Text style={styles.eventTitle}>{event.title}</Text>
-        <Text style={styles.eventDate}>{event.date}</Text>
-        <Text style={styles.eventLocation}>{event.location}</Text>
-        <Text style={styles.eventDescription}>{event.description}</Text>
-        <TouchableOpacity
-          style={styles.detailsButton}
-          onPress={() => router.push(`/event-details?id=${event.id}`)}
-        >
-          <Text style={styles.detailsButtonText}>DETALII</Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
-  );
+  const { t } = useTranslation();
+
+  // Helper function to get translated event data
+  const getTranslatedEventData = (event: Event) => {
+    const eventKey = `event${event.id}`;
+    return {
+      title: t(`${eventKey}Title`, { defaultValue: event.title }),
+      date: t(`${eventKey}Date`, { defaultValue: event.date }),
+      location: t(`${eventKey}Location`, { defaultValue: event.location }),
+      description: t(`${eventKey}Description`, {
+        defaultValue: event.description,
+      }),
+    };
+  };
+
+  const renderEventCard = (event: Event, index: number) => {
+    const translatedEvent = getTranslatedEventData(event);
+
+    return (
+      <TouchableOpacity
+        key={event.id}
+        style={[
+          styles.eventCard,
+          isWeb && isLargeScreen && styles.webEventCard,
+          isWeb &&
+            isLargeScreen &&
+            index % 3 !== 2 &&
+            styles.webEventCardWithMargin,
+        ]}
+      >
+        <Image source={event.image} style={styles.eventImage} />
+        <View style={styles.eventContent}>
+          <Text style={styles.eventTitle}>{translatedEvent.title}</Text>
+          <Text style={styles.eventDate}>{translatedEvent.date}</Text>
+          <Text style={styles.eventLocation}>{translatedEvent.location}</Text>
+          <Text style={styles.eventDescription}>
+            {translatedEvent.description}
+          </Text>
+          <TouchableOpacity
+            style={styles.detailsButton}
+            onPress={() => router.push(`/event-details?id=${event.id}`)}
+          >
+            <Text style={styles.detailsButtonText}>{t("details")}</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <Text style={styles.pageTitle}>Evenimente</Text>
+        <Text style={styles.pageTitle}>{t("eventsPageTitle")}</Text>
 
         <View
           style={[
@@ -70,19 +91,19 @@ export default function Events() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1f3e25", // Back to solid dark green
+    backgroundColor: "#1f3e25",
   },
   content: {
     flex: 1,
     paddingHorizontal: 20,
   },
   pageTitle: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 32,
-    fontWeight: "600", // Slightly less bold for modern look
+    fontWeight: "600",
     textAlign: "center",
-    marginVertical: Platform.OS === "web" ? 10 : 20, // Test: less margin on web
-    letterSpacing: 0.5, // Add letter spacing for modern feel
+    marginVertical: Platform.OS === "web" ? 10 : 20,
+    letterSpacing: 0.5,
   },
   eventsContainer: {
     paddingBottom: 20,
@@ -93,11 +114,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   eventCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.03)", // Softer background
-    borderRadius: 16, // More modern rounded corners
-    marginBottom: 20, // Increased spacing
+    backgroundColor: "rgba(255, 255, 255, 0.03)",
+    borderRadius: 16,
+    marginBottom: 20,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)", // Softer border
+    borderColor: "rgba(255, 255, 255, 0.08)",
     overflow: "hidden",
     ...(Platform.OS === "web"
       ? { boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }
@@ -121,38 +142,38 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   eventContent: {
-    padding: 20, // Increased padding for modern feel
+    padding: 20,
   },
   eventTitle: {
     color: "#ffffff",
     fontSize: 18,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
     marginBottom: 8,
-    letterSpacing: 0.3, // Add letter spacing
+    letterSpacing: 0.3,
   },
   eventDate: {
-    color: "#f0d26e", // Updated to new yellow color
+    color: "#f0d26e",
     fontSize: 14,
     marginBottom: 4,
     fontWeight: "500",
   },
   eventLocation: {
-    color: "#B8B8B8", // Softer gray
+    color: "#B8B8B8",
     fontSize: 14,
     marginBottom: 8,
   },
   eventDescription: {
-    color: "#D0D0D0", // Softer light gray
+    color: "#D0D0D0",
     fontSize: 14,
-    lineHeight: 22, // Increased line height for readability
-    marginBottom: 16, // Increased margin
+    lineHeight: 22,
+    marginBottom: 16,
   },
   detailsButton: {
-    backgroundColor: "#f0d26e", // Updated to new yellow color
+    backgroundColor: "#f0d26e",
     borderWidth: 0,
-    paddingVertical: 10, // Slightly more padding
+    paddingVertical: 10,
     paddingHorizontal: 18,
-    borderRadius: 8, // More modern rounded corners
+    borderRadius: 8,
     alignSelf: "flex-end",
     ...(Platform.OS === "web"
       ? { boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }
@@ -164,10 +185,10 @@ const styles = StyleSheet.create({
         }),
   },
   detailsButtonText: {
-    color: "#1f3e25", // Dark green text for better contrast on yellow background
+    color: "#1f3e25",
     fontSize: 12,
-    fontWeight: "600", // Slightly less bold
+    fontWeight: "600",
     textAlign: "center",
-    letterSpacing: 0.5, // Add letter spacing
+    letterSpacing: 0.5,
   },
 });
