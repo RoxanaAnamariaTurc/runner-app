@@ -1,6 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import { initializePageAccessibility } from "../utils/accessibility";
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
@@ -8,10 +9,21 @@ export default function LanguageSwitcher() {
   const toggleLanguage = () => {
     const newLanguage = i18n.language === "en" ? "ro" : "en";
     i18n.changeLanguage(newLanguage);
+
+    // Update document accessibility for new language
+    initializePageAccessibility(newLanguage as "ro" | "en");
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={toggleLanguage}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={toggleLanguage}
+      accessibilityRole="button"
+      accessibilityLabel={`Switch language to ${
+        i18n.language === "en" ? "Romanian" : "English"
+      }`}
+      accessibilityHint="Changes the application language"
+    >
       <View style={styles.flagContainer}>
         <Text style={styles.flagText}>
           {i18n.language === "en" ? "🇺🇸" : "🇷🇴"}

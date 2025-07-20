@@ -12,6 +12,10 @@ import LoadingScreen from "./_components/LoadingScreen";
 import LanguageSwitcher from "./_components/LanguageSwitcher";
 import "./i18n/config";
 import { useTranslation } from "react-i18next";
+import {
+  initializePageAccessibility,
+  setPageLanguage,
+} from "./utils/accessibility";
 
 const RootLayout = () => {
   const { t, ready } = useTranslation();
@@ -52,6 +56,11 @@ const RootLayout = () => {
       if (!ready) return;
 
       setAppReadyState((prev) => ({ ...prev, translations: true }));
+
+      // Initialize page accessibility settings
+      if (Platform.OS === "web") {
+        initializePageAccessibility("ro"); // Default to Romanian
+      }
 
       try {
         if (Platform.OS === "web") {
