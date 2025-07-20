@@ -89,7 +89,7 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/crosul-sperantei-blaj.git
+   git clone https://github.com/RoxanaAnamariaTurc/crosul_sperantei.git
    cd crosul-sperantei-blaj
    ```
 
@@ -228,8 +228,6 @@ assets/
 ├── previousImages/     # 26 previous event photos
 └── ...
 
-docs/
-└── LAZY_LOADING.md     # Performance optimization documentation
 ```
 
 ## 🌍 Internationalization
@@ -323,7 +321,6 @@ The app is configured through:
 
 ## 📚 Documentation
 
-- [Lazy Loading Implementation](./docs/LAZY_LOADING.md) - Performance optimization details
 - [Expo Documentation](https://docs.expo.dev/) - Platform-specific guides
 - [React Native Documentation](https://reactnative.dev/) - Framework reference
 
