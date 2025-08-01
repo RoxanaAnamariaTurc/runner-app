@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   Image,
   View,
@@ -20,6 +20,7 @@ interface LazyImageProps {
   onLoad?: () => void;
   onError?: () => void;
   threshold?: number; // Distance from viewport to start loading
+  priority?: "high" | "low"; // Loading priority
 }
 
 export default function LazyImage({
@@ -31,15 +32,27 @@ export default function LazyImage({
   onLoad,
   onError,
   threshold = 50,
+  priority = "low",
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [shouldLoad, setShouldLoad] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(priority === "high");
   const containerRef = useRef<View>(null);
+  const imageRef = useRef<Image>(null);
+  const loadTimeoutRef = useRef<number>();
+
+  // Check if image is already cached
+  const isCached = imagePerformance.isImageCached(source);
 
   // For React Native Web, we can use Intersection Observer
   useEffect(() => {
+    if (priority === "high" || isCached) {
+      setShouldLoad(true);
+      setIsInView(true);
+      return;
+    }
+
     if (Platform.OS === "web" && containerRef.current) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -53,6 +66,7 @@ export default function LazyImage({
         },
         {
           rootMargin: `${threshold}px`,
+          threshold: 0.1, // Start loading when 10% visible
         }
       );
 
@@ -74,28 +88,54 @@ export default function LazyImage({
         observer.disconnect();
       };
     } else {
-      // For React Native, use a progressive loading strategy
-      // Load images in batches with a slight delay to reduce initial load
-      const timer = setTimeout(() => {
+      // For React Native, use a staggered loading strategy
+      // Load images in batches with priority-based delays
+      const delay = priority === "high" ? 0 : Math.random() * 1000 + 500;
+
+      loadTimeoutRef.current = setTimeout(() => {
         setShouldLoad(true);
         setIsInView(true);
-      }, Math.random() * 2000); // Random delay between 0-2 seconds
+      }, delay) as any;
 
-      return () => clearTimeout(timer);
+      return () => {
+        if (loadTimeoutRef.current) {
+          clearTimeout(loadTimeoutRef.current);
+        }
+      };
     }
-  }, [threshold]);
+  }, [threshold, priority, isCached]);
 
-  const handleImageLoad = () => {
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (loadTimeoutRef.current) {
+        clearTimeout(loadTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleImageLoad = useCallback(() => {
     setIsLoaded(true);
     imagePerformance.cacheImage(source);
     imagePerformance.onImageLoaded();
     onLoad?.();
-  };
 
-  const handleImageError = () => {
+    // Clear image reference after loading to save memory
+    if (Platform.OS !== "web") {
+      setTimeout(() => {
+        if (imageRef.current) {
+          // Force garbage collection on native platforms
+          (imageRef.current as any) = null;
+        }
+      }, 100);
+    }
+  }, [source, onLoad]);
+
+  const handleImageError = useCallback(() => {
     setHasError(true);
+    console.warn("Image failed to load:", source);
     onError?.();
-  };
+  }, [source, onError]);
 
   const defaultPlaceholder = (
     <View style={[styles.placeholder, style]}>
@@ -109,6 +149,30 @@ export default function LazyImage({
     </View>
   );
 
+  // Use cached images immediately
+  if (isCached && !hasError) {
+    return (
+      <View
+        ref={containerRef}
+        style={[containerStyle, { position: "relative" }]}
+      >
+        <Image
+          ref={imageRef}
+          source={source}
+          style={style}
+          resizeMode={resizeMode}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
+          // Optimize memory usage
+          {...(Platform.OS !== "web" && {
+            progressiveRenderingEnabled: true,
+            fadeDuration: 150,
+          })}
+        />
+      </View>
+    );
+  }
+
   return (
     <View ref={containerRef} style={[containerStyle, { position: "relative" }]}>
       {!shouldLoad && (placeholder || defaultPlaceholder)}
@@ -117,6 +181,7 @@ export default function LazyImage({
         <>
           {!isLoaded && (placeholder || defaultPlaceholder)}
           <Image
+            ref={imageRef}
             source={source}
             style={[
               style,
@@ -128,6 +193,12 @@ export default function LazyImage({
             resizeMode={resizeMode}
             onLoad={handleImageLoad}
             onError={handleImageError}
+            // Memory optimizations
+            {...(Platform.OS !== "web" && {
+              progressiveRenderingEnabled: true,
+              fadeDuration: isLoaded ? 0 : 200,
+              blurRadius: isLoaded ? 0 : 1,
+            })}
           />
         </>
       )}

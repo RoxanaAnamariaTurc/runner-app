@@ -16,9 +16,10 @@ import { getCurrentPrices } from "./utils/pricing";
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
 import PricingInfo from "./_components/PricingInfo";
+import { getDisplayDate } from "./utils/dateUtils";
 
 export default function EventDetails() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const event = eventsData.find((e) => e.id === parseInt(id || "0"));
 
@@ -37,9 +38,20 @@ export default function EventDetails() {
   // Helper function to get translated event data
   const getTranslatedEventData = (event: Event) => {
     const eventKey = `event${event.id}`;
+    const baseTranslatedDate = t(`${eventKey}Date`, {
+      defaultValue: event.date,
+    });
+
     return {
       title: t(`${eventKey}Title`, { defaultValue: event.title }),
-      date: t(`${eventKey}Date`, { defaultValue: event.date }),
+      date: getDisplayDate(
+        {
+          date: baseTranslatedDate,
+          title: event.title,
+          startTime: event.startTime,
+        },
+        i18n.language === "ro" ? "ro" : "en"
+      ),
       location: t(`${eventKey}Location`, { defaultValue: event.location }),
       description: t(`${eventKey}Description`, {
         defaultValue: event.description,

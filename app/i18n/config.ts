@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { LanguageStorage } from "../utils/languageStorage";
 
 // Language resources
 const resources = {
@@ -418,14 +419,42 @@ const resources = {
   },
 };
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: "ro", // Default language (Romanian)
-  fallbackLng: "en",
+// Initialize i18n with persistent language support
+const initializeI18n = async () => {
+  try {
+    // Load saved language preference
+    const savedLanguage = await LanguageStorage.loadLanguage();
+    const defaultLanguage = savedLanguage || "ro"; // Default to Romanian
 
-  interpolation: {
-    escapeValue: false,
-  },
-});
+    await i18n.use(initReactI18next).init({
+      resources,
+      lng: defaultLanguage,
+      fallbackLng: "en",
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+
+    // Save language change events to storage
+    i18n.on("languageChanged", (language) => {
+      LanguageStorage.saveLanguage(language);
+    });
+  } catch (error) {
+    console.warn("Failed to initialize i18n with saved language:", error);
+
+    // Fallback to default initialization
+    await i18n.use(initReactI18next).init({
+      resources,
+      lng: "ro",
+      fallbackLng: "en",
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+  }
+};
+
+// Initialize i18n
+initializeI18n();
 
 export default i18n;

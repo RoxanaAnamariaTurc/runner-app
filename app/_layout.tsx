@@ -16,6 +16,7 @@ import {
   initializePageAccessibility,
   setPageLanguage,
 } from "./utils/accessibility";
+import PerformanceUtils from "./utils/performanceUtils";
 
 const RootLayout = () => {
   const { t, ready } = useTranslation();
@@ -42,6 +43,11 @@ const RootLayout = () => {
     }
 
     if (allReady) {
+      // Initialize performance monitoring in production
+      if (!__DEV__) {
+        PerformanceUtils.startPerformanceMonitoring();
+      }
+
       // Dispatch custom event to signal app readiness
       if (Platform.OS === "web" && typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("app-ready"));
@@ -59,7 +65,7 @@ const RootLayout = () => {
 
       // Initialize page accessibility settings
       if (Platform.OS === "web") {
-        initializePageAccessibility("ro"); // Default to Romanian
+        await initializePageAccessibility(); // Will load from storage
       }
 
       try {

@@ -1,4 +1,5 @@
 import { Platform } from "react-native";
+import { LanguageStorage } from "./languageStorage";
 
 /**
  * Utility to set document title for web accessibility
@@ -52,8 +53,12 @@ export const setPageLanguage = (lang: "ro" | "en") => {
 /**
  * Initialize page accessibility settings
  */
-export const initializePageAccessibility = (language: "ro" | "en" = "ro") => {
+export const initializePageAccessibility = async (language?: "ro" | "en") => {
   if (Platform.OS === "web") {
+    // Use provided language or load from storage
+    const selectedLanguage =
+      language || (await LanguageStorage.loadLanguage()) || "ro";
+
     const titles = {
       ro: "Crosul Speranței Blaj - Editia a VIII-a | Eveniment Caritabil de Alergare",
       en: "Hope Cross Blaj - 8th Edition | Charity Running Event",
@@ -64,8 +69,10 @@ export const initializePageAccessibility = (language: "ro" | "en" = "ro") => {
       en: "Join the 8th edition of Hope Cross, an event that combines sports with charitable spirit. The main event of the year - the cross that brings the community together for a noble cause.",
     };
 
-    setDocumentTitle(titles[language]);
-    setMetaDescription(descriptions[language]);
-    setPageLanguage(language);
+    setDocumentTitle(titles[selectedLanguage as keyof typeof titles]);
+    setMetaDescription(
+      descriptions[selectedLanguage as keyof typeof descriptions]
+    );
+    setPageLanguage(selectedLanguage as "ro" | "en");
   }
 };

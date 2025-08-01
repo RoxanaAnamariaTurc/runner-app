@@ -16,6 +16,7 @@ class ImageLoadingPerformance {
   };
 
   private imageCache = new Set<string>();
+  private maxCacheSize = 50; // Limit cache size to prevent memory leaks
 
   startTracking(totalImages: number) {
     this.metrics.imageLoadStart = Date.now();
@@ -54,12 +55,18 @@ class ImageLoadingPerformance {
       }
 
       const loadTime = this.metrics.imageLoadEnd - this.metrics.imageLoadStart;
-      console.log(
-        `📸 Image Loading Complete: ${loadTime}ms for ${this.metrics.totalImages} images`
-      );
+      if (__DEV__) {
+        console.log(
+          `📸 Image Loading Complete: ${loadTime}ms for ${this.metrics.totalImages} images`
+        );
+      }
 
-      // Log memory usage if available
-      if (Platform.OS === "web" && (window.performance as any).memory) {
+      // Log memory usage if available (only in development)
+      if (
+        __DEV__ &&
+        Platform.OS === "web" &&
+        (window.performance as any).memory
+      ) {
         const memory = (window.performance as any).memory;
         console.log(
           `💾 Memory Usage: ${Math.round(
@@ -89,11 +96,23 @@ class ImageLoadingPerformance {
       typeof imageSource === "string"
         ? imageSource
         : imageSource?.uri || String(imageSource);
+
+    // Implement cache size limit to prevent memory leaks
+    if (this.imageCache.size >= this.maxCacheSize) {
+      const firstItem = this.imageCache.values().next().value;
+      if (firstItem) {
+        this.imageCache.delete(firstItem);
+      }
+    }
+
     this.imageCache.add(imageKey);
   }
 
   clearCache() {
     this.imageCache.clear();
+    if (__DEV__) {
+      console.log("🧹 Image cache cleared");
+    }
   }
 
   getMetrics() {

@@ -13,20 +13,32 @@ import { router } from "expo-router";
 import Footer from "./_components/Footer";
 import { eventsData, Event } from "./data/events";
 import { useTranslation } from "react-i18next";
+import { getDisplayDate } from "./utils/dateUtils";
 
 const { width } = Dimensions.get("window");
 const isWeb = Platform.OS === "web";
 const isLargeScreen = width > 768;
 
 export default function Events() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // Helper function to get translated event data
   const getTranslatedEventData = (event: Event) => {
     const eventKey = `event${event.id}`;
+    const baseTranslatedDate = t(`${eventKey}Date`, {
+      defaultValue: event.date,
+    });
+
     return {
       title: t(`${eventKey}Title`, { defaultValue: event.title }),
-      date: t(`${eventKey}Date`, { defaultValue: event.date }),
+      date: getDisplayDate(
+        {
+          date: baseTranslatedDate,
+          title: event.title,
+          startTime: event.startTime,
+        },
+        i18n.language === "ro" ? "ro" : "en"
+      ),
       location: t(`${eventKey}Location`, { defaultValue: event.location }),
       description: t(`${eventKey}Description`, {
         defaultValue: event.description,
