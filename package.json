@@ -8,7 +8,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:web": "npx expo export --platform web",
-    "preview": "npx serve dist"
+    "preview": "npx serve dist",
+    "optimize-images": "node scripts/optimize-images.js",
+    "build:optimized": "npm run optimize-images && npm run build:web",
+    "generate-icons": "node scripts/generate-pwa-icons.js"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
+    "sharp": "^0.34.3",
     "typescript": "~5.8.3"
   },
   "private": true

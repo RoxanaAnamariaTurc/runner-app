@@ -67,8 +67,42 @@
 
     <!-- Favicon and App Icons -->
     <link rel="icon" type="image/png" href="./assets/images/logo-crosul.png" />
-    <link rel="apple-touch-icon" href="./assets/images/logo-crosul.png" />
-    <link rel="shortcut icon" href="./assets/images/logo-crosul.png" />
+    <!-- App Icons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="./assets/icons/apple-touch-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="./assets/icons/apple-touch-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="167x167"
+      href="./assets/icons/apple-touch-icon-167x167.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/icons/apple-touch-icon-180x180.png"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/icons/favicon-16x16.png"
+    />
+    <link rel="shortcut icon" href="./assets/icons/favicon-32x32.png" />
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#1f3e25" />
@@ -79,7 +113,7 @@
     <link rel="manifest" href="./manifest.json" />
 
     <!-- Preload critical assets -->
-    <link rel="preload" href="./assets/images/logo-crosul.png" as="image" />
+    <link rel="preload" href="./assets/icons/icon-192x192.png" as="image" />
 
     <style>
       /**
@@ -192,6 +226,39 @@
             }, 600);
           }
         });
+
+        // Register Service Worker for PWA functionality
+        if ("serviceWorker" in navigator) {
+          window.addEventListener("load", function () {
+            navigator.serviceWorker
+              .register("/sw.js")
+              .then(function (registration) {
+                console.log(
+                  "✅ Service Worker registered successfully:",
+                  registration.scope
+                );
+
+                // Listen for updates
+                registration.addEventListener("updatefound", function () {
+                  const newWorker = registration.installing;
+                  newWorker.addEventListener("statechange", function () {
+                    if (
+                      newWorker.state === "installed" &&
+                      navigator.serviceWorker.controller
+                    ) {
+                      console.log(
+                        "🔄 New app version available! Refresh to update."
+                      );
+                      // You could show a notification to user here
+                    }
+                  });
+                });
+              })
+              .catch(function (error) {
+                console.log("❌ Service Worker registration failed:", error);
+              });
+          });
+        }
       })();
     </script>
   </body>

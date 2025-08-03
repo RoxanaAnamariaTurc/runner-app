@@ -19,8 +19,8 @@ interface LazyImageProps {
   placeholder?: React.ReactNode;
   onLoad?: () => void;
   onError?: () => void;
-  threshold?: number; // Distance from viewport to start loading
-  priority?: "high" | "low"; // Loading priority
+  threshold?: number;
+  priority?: "high" | "low";
 }
 
 export default function LazyImage({
@@ -40,12 +40,10 @@ export default function LazyImage({
   const [shouldLoad, setShouldLoad] = useState(priority === "high");
   const containerRef = useRef<View>(null);
   const imageRef = useRef<Image>(null);
-  const loadTimeoutRef = useRef<number>();
+  const loadTimeoutRef = useRef<number>(null);
 
-  // Check if image is already cached
   const isCached = imagePerformance.isImageCached(source);
 
-  // For React Native Web, we can use Intersection Observer
   useEffect(() => {
     if (priority === "high" || isCached) {
       setShouldLoad(true);
@@ -70,7 +68,6 @@ export default function LazyImage({
         }
       );
 
-      // We need to get the DOM element for web
       const element = (containerRef.current as any)?._nativeTag
         ? document.querySelector(
             `[data-tag="${(containerRef.current as any)._nativeTag}"]`
@@ -88,9 +85,7 @@ export default function LazyImage({
         observer.disconnect();
       };
     } else {
-      // For React Native, use a staggered loading strategy
-      // Load images in batches with priority-based delays
-      const delay = priority === "high" ? 0 : Math.random() * 1000 + 500;
+      const delay = priority === "low" ? Math.random() * 1000 + 500 : 0;
 
       loadTimeoutRef.current = setTimeout(() => {
         setShouldLoad(true);
@@ -105,7 +100,6 @@ export default function LazyImage({
     }
   }, [threshold, priority, isCached]);
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (loadTimeoutRef.current) {
@@ -120,11 +114,9 @@ export default function LazyImage({
     imagePerformance.onImageLoaded();
     onLoad?.();
 
-    // Clear image reference after loading to save memory
     if (Platform.OS !== "web") {
       setTimeout(() => {
         if (imageRef.current) {
-          // Force garbage collection on native platforms
           (imageRef.current as any) = null;
         }
       }, 100);
@@ -149,7 +141,6 @@ export default function LazyImage({
     </View>
   );
 
-  // Use cached images immediately
   if (isCached && !hasError) {
     return (
       <View
@@ -163,7 +154,6 @@ export default function LazyImage({
           resizeMode={resizeMode}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          // Optimize memory usage
           {...(Platform.OS !== "web" && {
             progressiveRenderingEnabled: true,
             fadeDuration: 150,
@@ -193,7 +183,6 @@ export default function LazyImage({
             resizeMode={resizeMode}
             onLoad={handleImageLoad}
             onError={handleImageError}
-            // Memory optimizations
             {...(Platform.OS !== "web" && {
               progressiveRenderingEnabled: true,
               fadeDuration: isLoaded ? 0 : 200,

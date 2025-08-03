@@ -104,7 +104,7 @@ export default function LoadingScreen({ loadingProgress }: LoadingScreenProps) {
         <View style={styles.logoContainer}>
           <View style={styles.logoBackground}>
             <Image
-              source={require("../../assets/images/logo-crosul.png")}
+              source={require("../../assets/optimized/logo-crosul.png")}
               style={styles.logo}
               resizeMode="contain"
             />
