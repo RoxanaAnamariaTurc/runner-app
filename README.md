@@ -56,10 +56,10 @@ The app features event management, participant registration, photo galleries, sp
 │                                                                                 │
 │  📱 GitHub Repository                  🚀 Netlify Hosting                       │
 │  ┌─────────────────────┐              ┌─────────────────────────────────────┐   │
-│  │ • Source Code       │    Push      │ • Auto Build & Deploy              │   │
-│  │ • Service Worker    │ ──────────► │ • CDN Distribution                  │   │
-│  │ • Optimized Assets  │              │ • HTTPS Certificate                │   │
-│  │ • PWA Manifest      │              │ • Global Edge Servers              │   │
+│  │ • Source Code       │    Push      │ • Auto Build & Deploy              │    │
+│  │ • Service Worker    │ ──────────► │ • CDN Distribution                  │    │
+│  │ • Optimized Assets  │              │ • HTTPS Certificate                │    │
+│  │ • PWA Manifest      │              │ • Global Edge Servers              │    │
 │  └─────────────────────┘              └─────────────────────────────────────┘   │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
@@ -67,12 +67,12 @@ The app features event management, participant registration, photo galleries, sp
                                         │ HTTPS Request
                                         ▼
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                            👤 USER DEVICES                                     │
+│                            👤 USER DEVICES                                      │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                 │
-│  📱 Mobile Devices          💻 Desktop Browsers         🖥️ Smart TVs            │
+│  📱 Mobile Devices          💻 Desktop Browsers         🖥️ Smart TVs           │
 │  ┌─────────────────┐      ┌─────────────────────┐      ┌─────────────────┐     │
-│  │ • iOS Safari    │      │ • Chrome            │      │ • Browser Apps │     │
+│  │ • iOS Safari    │      │ • Chrome            │      │ • Browser Apps │      │
 │  │ • Android Chrome│      │ • Firefox           │      │ • Kiosk Mode    │     │
 │  │ • Samsung       │      │ • Edge              │      │ • Public Display│     │
 │  │ • PWA Install   │      │ • PWA Install       │      │                 │     │
@@ -169,8 +169,8 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/RoxanaAnamariaTurc/crosul_sperantei.git
-   cd crosul_sperantei
+   git clone https://github.com/RoxanaAnamariaTurc/runner-app.git
+   cd runner-app
    ```
 
 2. **Install dependencies**
@@ -429,14 +429,6 @@ The application is configured for automatic deployment with:
 - **Cross-Platform**: Single codebase supporting iOS, Android, and Web
 - **Production-Ready**: Automated deployment with CI/CD integration
 
-## 📚 Technical Documentation
-
-### Architecture References
-
-- [Performance Optimization Report](./PERFORMANCE_OPTIMIZATION.md) - Detailed performance analysis
-- [Performance Fixes Applied](./PERFORMANCE_FIXES.md) - Optimization implementations
-- [Code Quality Analysis](./CODE_QUALITY_REPORT.md) - Code quality metrics and improvements
-
 ### Framework Documentation
 
 - [Expo Documentation](https://docs.expo.dev/) - Platform-specific development guides
@@ -666,15 +658,12 @@ The app is configured through:
 
 ## 🙏 Acknowledgments
 
-- **Crosul Speranței Blaj** organization for the opportunity to support this meaningful cause
 - **Expo team** for the excellent development platform and tools
 - **React Native community** for comprehensive resources and support
 - **i18next team** for robust internationalization framework
-- **Contributors** who helped with testing and feedback
 
 ## 📚 Documentation
 
-- [Lazy Loading Implementation](./docs/LAZY_LOADING.md) - Performance optimization details
 - [Expo Documentation](https://docs.expo.dev/) - Platform-specific guides
 - [React Native Documentation](https://reactnative.dev/) - Framework reference
 
