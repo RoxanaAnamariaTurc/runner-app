@@ -1,9 +1,10 @@
 import React, { memo, useMemo, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Event } from "../data/events";
+import { Event } from "../../data/events";
 import { useTranslation } from "react-i18next";
-import LazyImage from "./LazyImage";
-import { getDisplayDate } from "../utils/dateUtils";
+import LazyImage from "../ui/LazyImage";
+import PlaceholderImage from "../ui/PlaceholderImage";
+import { getDisplayDate } from "../../utils/dateUtils";
 
 interface OptimizedEventCardProps {
   event: Event;
@@ -52,16 +53,20 @@ const OptimizedEventCard = memo(
 
     return (
       <View style={[styles.carouselCard, { width: cardWidth }, style]}>
-        <LazyImage
-          source={event.image}
-          style={styles.carouselImage}
-          threshold={100}
-          placeholder={
-            <View style={styles.imagePlaceholder}>
-              <Text style={styles.placeholderText}>Loading...</Text>
-            </View>
-          }
-        />
+        {event.image ? (
+          <LazyImage
+            source={event.image}
+            style={styles.carouselImage}
+            threshold={100}
+            placeholder={
+              <View style={styles.imagePlaceholder}>
+                <Text style={styles.placeholderText}>Loading...</Text>
+              </View>
+            }
+          />
+        ) : (
+          <PlaceholderImage style={styles.carouselImage} />
+        )}
         <View style={styles.carouselContent}>
           <View style={styles.carouselInfo}>
             <Text style={styles.carouselTitle} numberOfLines={2}>
@@ -129,7 +134,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   carouselDate: {
-    color: "#f0d26e",
+    color: "#4ECDC4",
     fontSize: 14,
     marginBottom: 3,
   },
@@ -138,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   detailsButton: {
-    backgroundColor: "#CD853F",
+    backgroundColor: "#4ECDC4",
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -146,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   detailsButtonText: {
-    color: "#ffffff",
+    color: "#0D0D0D",
     fontSize: 12,
     fontWeight: "600",
   },

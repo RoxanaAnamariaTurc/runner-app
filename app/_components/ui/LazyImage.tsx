@@ -9,7 +9,7 @@ import {
   ImageStyle,
   ViewStyle,
 } from "react-native";
-import { imagePerformance } from "../utils/imagePerformance";
+import { imagePerformance } from "../../utils/imagePerformance";
 
 interface LazyImageProps {
   source: ImageSourcePropType;
@@ -131,7 +131,7 @@ export default function LazyImage({
 
   const defaultPlaceholder = (
     <View style={[styles.placeholder, style]}>
-      <ActivityIndicator size="small" color="#f0d26e" />
+      <ActivityIndicator size="small" color="#4ECDC4" />
     </View>
   );
 

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
-import { usePerformanceMetrics } from "../hooks/usePerformanceMetrics";
+import { usePerformanceMetrics } from "../../hooks/usePerformanceMetrics";
 
 interface PerformanceMonitorProps {
   visible?: boolean;

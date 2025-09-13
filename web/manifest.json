@@ -1,11 +1,11 @@
 {
-  "name": "Crosul Speranței Blaj",
-  "short_name": "Crosul Speranței",
-  "description": "Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă.",
+  "name": "RunHope - Crosul Speranței Blaj",
+  "short_name": "RunHope",
+  "description": "RunHope - Aplicația oficială pentru evenimentul caritabil de alergare din Blaj. Aleargă pentru speranță și comunitate!",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1f3e25",
-  "theme_color": "#1f3e25",
+  "background_color": "#0D0D0D",
+  "theme_color": "#0D0D0D",
   "orientation": "portrait-primary",
   "icons": [
     {

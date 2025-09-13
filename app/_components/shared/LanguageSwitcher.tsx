@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import { usePersistentLanguage } from "../hooks/usePersistentLanguage";
+import { usePersistentLanguage } from "../../hooks/usePersistentLanguage";
 
 export default function LanguageSwitcher() {
   const { currentLanguage, changeLanguage, isLanguageLoaded } =
@@ -82,10 +82,10 @@ const styles = StyleSheet.create({
   toggleTrack: {
     width: 70,
     height: 32,
-    backgroundColor: "rgba(240, 210, 110, 0.15)",
+    backgroundColor: "rgba(78, 205, 196, 0.1)",
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "rgba(240, 210, 110, 0.3)",
+    borderColor: "#4ECDC4",
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 28,
     height: 28,
-    backgroundColor: "rgba(240, 210, 110, 0.9)",
+    backgroundColor: "#ffffff",
     borderRadius: 14,
     justifyContent: "center",
     alignItems: "center",

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React from "react";
 import { router } from "expo-router";
-import Footer from "./_components/Footer";
+import { Footer, PlaceholderImage } from "./_components";
 import { eventsData, Event } from "./data/events";
 import { useTranslation } from "react-i18next";
 import { getDisplayDate } from "./utils/dateUtils";
@@ -61,7 +61,11 @@ export default function Events() {
             styles.webEventCardWithMargin,
         ]}
       >
-        <Image source={event.image} style={styles.eventImage} />
+        {event.image ? (
+          <Image source={event.image} style={styles.eventImage} />
+        ) : (
+          <PlaceholderImage style={styles.eventImage} />
+        )}
         <View style={styles.eventContent}>
           <Text style={styles.eventTitle}>{translatedEvent.title}</Text>
           <Text style={styles.eventDate}>{translatedEvent.date}</Text>
@@ -103,14 +107,14 @@ export default function Events() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1f3e25",
+    backgroundColor: "#0D0D0D", // Deep black background
   },
   content: {
     flex: 1,
     paddingHorizontal: 20,
   },
   pageTitle: {
-    color: "#f0d26e",
+    color: "#4ECDC4",
     fontSize: 32,
     fontWeight: "600",
     textAlign: "center",
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   eventDate: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Turquoise
     fontSize: 14,
     marginBottom: 4,
     fontWeight: "500",
@@ -181,7 +185,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   detailsButton: {
-    backgroundColor: "#f0d26e",
+    backgroundColor: "#4ECDC4", // Turquoise
     borderWidth: 0,
     paddingVertical: 10,
     paddingHorizontal: 18,
@@ -197,7 +201,7 @@ const styles = StyleSheet.create({
         }),
   },
   detailsButtonText: {
-    color: "#1f3e25",
+    color: "#FFFFFF", // Changed from #1f3e25 to white for better contrast
     fontSize: 12,
     fontWeight: "600",
     textAlign: "center",

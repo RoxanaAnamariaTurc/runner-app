@@ -1,8 +1,8 @@
 {
   "expo": {
-    "scheme": "crosul",
-    "name": "Crosul Speranței Blaj",
-    "slug": "crosul_sperantei",
+    "scheme": "runhope",
+    "name": "RunHope - Crosul Speranței Blaj",
+    "slug": "runhope",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo-crosul.png",
@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/logo-crosul.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1f3e25"
+      "backgroundColor": "#0D0D0D"
     },
     "ios": {
       "supportsTablet": true,
@@ -20,7 +20,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo-crosul.png",
-        "backgroundColor": "#1f3e25"
+        "backgroundColor": "#0D0D0D"
       },
       "edgeToEdgeEnabled": true,
       "icon": "./assets/images/logo-crosul.png"
@@ -30,18 +30,18 @@
       "bundler": "metro",
       "output": "static",
       "meta": {
-        "title": "Crosul Speranței Blaj - Editia a VIII-a | Eveniment Caritabil de Alergare",
-        "description": "Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă. Alătură-te celei de-a VIII-a ediții a Crosului Speranței!",
-        "keywords": "cros, Blaj, Alba, alergare, caritate, sport, evenimente, speranța",
-        "author": "Crosul Speranței Blaj",
+        "title": "RunHope - Crosul Speranței Blaj | Eveniment Caritabil de Alergare",
+        "description": "RunHope - Aplicația oficială pentru Crosul Speranței Blaj. Alătură-te celei de-a VIII-a ediții și aleargă pentru o cauză nobilă!",
+        "keywords": "RunHope, cros, Blaj, Alba, alergare, caritate, sport, evenimente, speranța",
+        "author": "RunHope - Crosul Speranței Blaj",
         "image": "./assets/images/logo-crosul.png",
-        "og:title": "Crosul Speranței Blaj - Editia a VIII-a | Eveniment Caritabil de Alergare",
-        "og:description": "Alătură-te celei de-a VIII-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil.",
+        "og:title": "RunHope - Crosul Speranței Blaj | Eveniment Caritabil de Alergare",
+        "og:description": "RunHope - Aplicația oficială care combină sportul cu spiritul caritabil. Alătură-te comunității și aleargă pentru speranță!",
         "og:image": "./assets/images/logo-crosul.png",
         "og:type": "website",
         "twitter:card": "summary_large_image",
-        "twitter:title": "Crosul Speranței Blaj - Editia a VIII-a",
-        "twitter:description": "Evenimentul principal al anului - crosul care adună comunitatea pentru o cauză nobilă. Alătură-te celei de-a VIII-a ediții!",
+        "twitter:title": "RunHope - Crosul Speranței Blaj",
+        "twitter:description": "RunHope - Aplicația oficială pentru evenimentul caritabil de alergare din Blaj. Aleargă pentru speranță și comunitate!",
         "twitter:image": "./assets/images/logo-crosul.png"
       }
     },

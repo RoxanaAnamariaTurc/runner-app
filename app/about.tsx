@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
-import Footer from "./_components/Footer";
+import { Footer } from "./_components";
 import { useTranslation } from "react-i18next";
 
 const About = () => {
@@ -141,7 +141,7 @@ export default About;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1f3e25",
+    backgroundColor: "#0D0D0D", // Deep black background
   },
   scrollView: {
     flex: 1,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   founded: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Teal/cyan color
     fontSize: 16,
     fontWeight: "500",
   },
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   sectionTitle: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Teal/cyan color
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 15,
@@ -197,12 +197,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   valuePillYellow: {
-    backgroundColor: "rgba(240, 210, 110, 0.25)",
-    borderColor: "rgba(240, 210, 110, 0.4)",
+    backgroundColor: "rgba(78, 205, 196, 0.25)", // Turquoise
+    borderColor: "rgba(78, 205, 196, 0.4)",
   },
   valuePillRed: {
-    backgroundColor: "rgba(135, 206, 250, 0.25)",
-    borderColor: "rgba(135, 206, 250, 0.4)",
+    backgroundColor: "rgba(78, 205, 196, 0.15)", // Turquoise, lighter
+    borderColor: "rgba(78, 205, 196, 0.3)",
   },
   valuePillText: {
     color: "#ffffff",
@@ -216,14 +216,14 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.03)",
     borderRadius: 12,
     borderLeftWidth: 3,
-    borderLeftColor: "#f0d26e",
+    borderLeftColor: "#4ECDC4", // Teal/cyan color
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
   },
   projectTitle: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Teal/cyan color
     fontSize: 16,
     fontWeight: "600",
     marginBottom: 10,
@@ -247,13 +247,13 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   probeTitle: {
-    color: "#f0d26e",
+    color: "#4ECDC4",
     fontSize: 14,
     fontWeight: "bold",
     marginBottom: 5,
   },
   highlight: {
-    color: "#f0d26e",
+    color: "#4ECDC4",
     fontSize: 13,
     fontStyle: "italic",
     marginTop: 10,

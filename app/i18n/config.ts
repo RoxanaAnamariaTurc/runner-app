@@ -16,8 +16,8 @@ const resources = {
       allEvents: "All Events",
 
       // Home Page
-      mainTitle: "CROSUL SPERANTEI BLAJ",
-      subtitle: "8th Edition",
+      mainTitle: "RUNNER",
+      subtitle: "Community Edition",
       featuredEventsTitle: "Ongoing Events",
       featuredEventsNote: "Some events are ongoing and you can join anytime!",
       previousEventsTitle: "Previous Events",
@@ -41,7 +41,7 @@ const resources = {
       aboutTitle: "About Us",
       aboutMission: "Our Mission",
       aboutMissionText:
-        "Crosul Speranței is more than just a running event. It's a community movement that brings together people from all walks of life to support those with disabilities in our community.",
+        "Our running community is more than just a fitness group. It's a community movement that brings together people from all walks of life to support local causes and promote healthy living.",
       aboutValues: "Our Values",
       aboutSolidarity: "Solidarity",
       aboutSolidarityText: "Supporting each other in achieving common goals",
@@ -54,81 +54,81 @@ const resources = {
       aboutImpactText: "Making a real difference in people's lives",
 
       // About page detailed content
-      associationTitle: "🏃‍♂️ Running & Cycling Club Blaj Sports Association",
-      founded: "📅 Founded: 2017",
+      associationTitle: "🏃‍♂️ Local Running & Fitness Community",
+      founded: "📅 Founded: Recently",
       purpose: "Purpose",
       purposeText:
-        "Promoting mass sports, cultural and sports values, involvement in charitable activities and organizing community events with the support of volunteers.",
+        "Promoting fitness, wellness, community values, involvement in charitable activities and organizing community events with the support of volunteers.",
       values: "💡 Values",
       integrity: "Integrity",
       enthusiasm: "Enthusiasm",
       passion: "Passion",
       professionalism: "Professionalism",
       teamSpirit: "Team Spirit",
-      altruism: "Altruism",
+      altruism: "Community Support",
       majorProjects: "🌟 Major Projects",
-      crosulSperantei: "1. Crosul Speranței",
+      crosulSperantei: "1. Annual Community Run",
       crosulDescription:
-        "Charity & sports to support people with Down Syndrome and disabilities.",
+        "Fitness & community spirit to support local causes and charities.",
       participants: "participants",
       adults: "adults",
       children: "children",
       races: "Events:",
-      childrenRaces: "🏃 200m – 1300m children",
-      amateurRaces: "🏃‍♂️ 2.5 km, 8 km – amateurs",
-      advancedRaces: "🏅 Half marathon 21 km / 26.4 km – advanced",
+      childrenRaces: "🏃 Fun runs for kids",
+      amateurRaces: "🏃‍♂️ 5 km, 10 km – recreational runners",
+      advancedRaces: "🏅 Half marathon 21 km – competitive runners",
       donationHighlight:
-        "💡 Funds raised were donated to young people with disabilities",
-      edition1: "• Edition I (2017): 666 participants",
-      edition2: "• Edition II (2018): 262 adults, 405 children",
-      edition3: "• Edition III (2019): 723 participants",
-      giveHopeCampaign: '2. "Give Hope" Campaign',
+        "💡 Funds raised are donated to local community causes",
+      edition1: "• Previous events: 500+ participants",
+      edition2: "• Growing community engagement",
+      edition3: "• Regular weekly activities",
+      giveHopeCampaign: '2. "Community Support" Campaign',
       giveHopeDescription:
-        "Distributes food to isolated people (Trascău Mountains, Rîmeț), every year at Easter and Christmas.",
-      autism24h: "3. Autism 24H – Black Sea",
+        "Regular community outreach and support activities throughout the year.",
+      autism24h: "3. Charity Partnership Events",
       autismDescription:
-        "Participation in national event to support children with autism and Down Syndrome.",
-      blajAmbassadors: '🏃‍♂️ Blaj: 20 ambassadors, 1500+ km "auctioned"',
-      viaScriptorum: '4. "Via Scriptorum" Project',
+        "Participation in regional events to support various charitable causes.",
+      blajAmbassadors: "🏃‍♂️ Local ambassadors promoting fitness and community",
+      viaScriptorum: '4. "Fitness Education" Project',
       viaScriptorumDescription:
-        "Promoting written culture through track games inspired by local writers.",
+        "Promoting health and wellness education through community workshops.",
 
       // Event Data
       // Event 1 - Crosul Sperantei
-      event1Title: "Crosul Sperantei Blaj - 8th Edition",
-      event1Date: "October 4, 2025",
-      event1Location: "Campia Libertatii, Blaj",
+      event1Title: "Annual Community Run",
+      event1Date: "Coming Soon 2024",
+      event1Location: "City Center Park",
       event1Description:
-        "The main event of the year - the cross that brings the community together for a noble cause.",
+        "The main event of the year - bringing the community together for a great cause.",
       event1DetailedDescription:
-        "Join the 8th edition of Crosul Speranței, an event that combines sports with charitable spirit. This cross-country run is not just a competition, but a solidarity movement to support people with disabilities in our community.",
+        "Join our annual community run, an event that combines fitness with community spirit. This run is not just a competition, but a movement of solidarity to support local causes.",
 
       // Event 2 - Coffee Run
-      event2Title: "Coffee Run",
-      event2Date: "Saturday, July 19 (Weekly)",
-      event2Location: "15400 (See map for route)",
+      event2Title: "Weekly Coffee Run",
+      event2Date: "Every Saturday Morning",
+      event2Location: "Community Meeting Point",
       event2Description:
         "Relaxing 10km run for beginners - every Saturday morning.",
       event2DetailedDescription:
         "Weekly relaxing event for beginners. Coffee Run is a 10km running session that takes place every Saturday morning. Perfect for those who want to start the day with energy and connect with the running community.",
 
       // Event 3 - Tempo Running
-      event3Title: "1h Tempo Running Session Wednesday",
-      event3Date: "Wednesday, July 16 (Weekly)",
-      event3Location: "C.I.L. Stadium",
+      event3Title: "Midweek Training Session",
+      event3Date: "Every Wednesday Evening",
+      event3Location: "Local Sports Center",
       event3Description:
         "1-hour tempo training session - intermediate and beginner level.",
       event3DetailedDescription:
-        "Structured tempo training session designed to improve running pace and endurance. Open to intermediate and beginner runners who want to take their training to the next level.",
+        "Weekly tempo training session every Wednesday evening. Includes structured tempo training designed to improve running pace and endurance. Open to intermediate and beginner runners.",
 
       // Event 4 - Easy Run
-      event4Title: "Easy Run Mon & Fri",
-      event4Date: "Monday and Friday, July 14 (Weekly)",
-      event4Location: "Kime Market",
+      event4Title: "Easy Pace Group Swim",
+      event4Date: "Monday & Friday Evenings",
+      event4Location: "Community Park",
       event4Description:
-        "Easy run for beginners - every Monday and Friday evening.",
+        "Easy-paced swim for beginners - every Monday and Friday evening.",
       event4DetailedDescription:
-        "Easy running sessions every Monday and Friday evening. Perfect for beginners or recovery sessions. Relaxed and friendly atmosphere for all levels.",
+        "Easy swimming sessions every Monday and Friday evening. Perfect for beginners or recovery sessions. Relaxed and friendly atmosphere for all levels.",
 
       // Event types and difficulty labels
       beginner: "Beginner",
@@ -176,7 +176,7 @@ const resources = {
       kidsRaceDetails2: "🗓 July 6, 2021 – linked to Sibiu Cycling Tour",
       kidsRaceDetails3: "👧👦 100 participants",
       autism24hDetails1: "🏁 70 national teams",
-      autism24hDetails2: "🥇 Blaj Club – 7th place (1209 km run)",
+      autism24hDetails2: "🥇 Local Team – 7th place (1209 km run)",
       autism24hDetails3: "🥉 3rd place in auctioned km",
 
       // Price labels
@@ -198,7 +198,7 @@ const resources = {
 
       // Footer
       followUs: "Follow us on:",
-      copyright: "© 2025 Crosul Speranței Blaj",
+      copyright: "© 2025 RUNNER",
 
       // Common
       free: "Free",
@@ -221,8 +221,8 @@ const resources = {
       allEvents: "Toate Evenimentele",
 
       // Home Page
-      mainTitle: "CROSUL SPERANTEI BLAJ",
-      subtitle: "Editia a VIII-a",
+      mainTitle: "RUNNER",
+      subtitle: "Ediția Comunității",
       featuredEventsTitle: "Evenimente în desfășurare",
       featuredEventsNote:
         "Unele evenimente sunt în desfășurare și te poți alătura oricând!",
@@ -262,9 +262,8 @@ const resources = {
       aboutImpactText: "Să facem o diferență reală în viețile oamenilor",
 
       // About page detailed content
-      associationTitle:
-        "🏃‍♂️ Asociația Clubul Sportiv Running & Cycling Club Blaj",
-      founded: "📅 Fondat: 2017",
+      associationTitle: "🏃‍♂️ Asociația Clubul Sportiv Local de Alergare",
+      founded: "📅 Fondat: Recent",
       purpose: "Scop",
       purposeText:
         "Promovarea sportului de masă, valorilor culturale și sportive, implicarea în activități caritabile și organizarea de evenimente pentru comunitate, cu sprijinul voluntarilor.",
@@ -276,9 +275,9 @@ const resources = {
       teamSpirit: "Spirit de echipă",
       altruism: "Altruism",
       majorProjects: "🌟 Proiecte Majore",
-      crosulSperantei: "1. Crosul Speranței",
+      crosulSperantei: "1. Alergarea Anuala a Comunitatii",
       crosulDescription:
-        "Caritate & sport pentru susținerea persoanelor cu Sindrom Down și dizabilități.",
+        "Caritate & sport pentru susținerea cauzelor locale și persoanelor cu dizabilități.",
       participants: "participanți",
       adults: "adulți",
       children: "copii",
@@ -291,53 +290,53 @@ const resources = {
       edition1: "• Ediția I (2017): 666 participanți",
       edition2: "• Ediția II (2018): 262 adulți, 405 copii",
       edition3: "• Ediția III (2019): 723 participanți",
-      giveHopeCampaign: '2. Campania "Daruieste Speranta"',
+      giveHopeCampaign: '2. Campania "Sprijin Comunitar"',
       giveHopeDescription:
-        "Distribuie alimente persoanelor izolate (Munții Trascău, Rîmeț), în fiecare an de Paști și Crăciun.",
-      autism24h: "3. Autism 24H – Marea Neagră",
+        "Activități de sprijin comunitar și caritate în fiecare an, pe perioada sărbătorilor.",
+      autism24h: "3. Evenimente de Caritate Parteneriat",
       autismDescription:
-        "Participare la eveniment național pentru sprijinul copiilor cu autism și Sindrom Down.",
-      blajAmbassadors: '🏃‍♂️ Blaj: 20 ambasadori, 1500+ km "licitați"',
+        "Participare la evenimente regionale pentru sprijinul copiilor cu dizabilități.",
+      blajAmbassadors: "🏃‍♂️ Ambasadori locali: 20 voluntari, 1500+ km alergați",
       viaScriptorum: '4. Proiect "Via Scriptorum"',
       viaScriptorumDescription:
         "Promovarea culturii scrise prin jocuri de pistă inspirate din scriitori locali.",
 
       // Event Data
       // Event 1 - Crosul Sperantei
-      event1Title: "Crosul Sperantei Blaj - Editia a VIII-a",
-      event1Date: "4 Octombrie 2025",
-      event1Location: "Campia Libertatii, Blaj",
+      event1Title: "Alergarea Anuala a Comunitatii",
+      event1Date: "In Curand 2024",
+      event1Location: "Parcul Centrului Orasului",
       event1Description:
-        "Evenimentul principal al anului - crosul care aduna comunitatea pentru o cauza nobila.",
+        "Evenimentul principal al anului - adunand comunitatea pentru o cauza nobila.",
       event1DetailedDescription:
-        "Alătură-te celei de-a VIII-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil. Acest cros nu este doar o competiție, ci o mișcare de solidaritate pentru susținerea persoanelor cu dizabilități din comunitatea noastră.",
+        "Alătură-te alergării anuale a comunității, un eveniment care combină fitness-ul cu spiritul comunitar. Această alergare nu este doar o competiție, ci o mișcare de solidaritate pentru susținerea cauzelor locale.",
 
       // Event 2 - Coffee Run
-      event2Title: "Coffee Run",
-      event2Date: "Sâmbătă, 19 Iulie (Săptămânal)",
-      event2Location: "15400 (Vezi harta pentru rută)",
+      event2Title: "Alergarea Saptamanala cu Cafea",
+      event2Date: "In Fiecare Sambata Dimineata",
+      event2Location: "Punct de Intalnire al Comunitatii",
       event2Description:
-        "Alergare relaxantă de 10km pentru începători - în fiecare sâmbătă dimineața.",
+        "Alergare relaxanta de 10km pentru incepatori - in fiecare sambata dimineata.",
       event2DetailedDescription:
-        "Eveniment săptămânal relaxant pentru începători. Coffee Run este o sesiune de alergare de 10km care are loc în fiecare sâmbătă dimineața. Perfect pentru cei care vor să înceapă ziua cu energie și să se conecteze cu comunitatea de alergători.",
+        "Eveniment săptămânal relaxant pentru începători. Alergarea cu Cafea este o sesiune de alergare de 10km care are loc în fiecare sâmbătă dimineața. Perfect pentru cei care vor să înceapă ziua cu energie și să se conecteze cu comunitatea de alergători.",
 
       // Event 3 - Tempo Running
-      event3Title: "1h Tempo Running Session Wednesday",
-      event3Date: "Miercuri, 16 Iulie (Săptămânal)",
-      event3Location: "Stadionul C.I.L.",
+      event3Title: "Sesiunea de Antrenament de Mijloc de Saptamana",
+      event3Date: "In Fiecare Miercuri Seara",
+      event3Location: "Centrul Sportiv Local",
       event3Description:
-        "Sesiune de antrenament tempo de 1 oră - nivel intermediar și începător.",
+        "Sesiune de antrenament tempo de 1 ora - nivel intermediar si incepator.",
       event3DetailedDescription:
-        "Sesiune de antrenament tempo structurat, concepută pentru îmbunătățirea ritmului și rezistenței la alergare. Deschis alergătorilor intermediari și începători care doresc să-și ducă antrenamentul la următorul nivel.",
+        "Sesiune de antrenament tempo săptămânală în fiecare miercuri seara. Include antrenament tempo structurat conceput pentru îmbunătățirea ritmului și rezistenței la alergare. Deschis alergătorilor intermediari și începători.",
 
       // Event 4 - Easy Run
-      event4Title: "Easy Run Mon & Fri",
-      event4Date: "Luni și Vineri, 14 Iulie (Săptămânal)",
-      event4Location: "Kime Market",
+      event4Title: "Innot Usor de Grup",
+      event4Date: "Luni si Vineri Searile",
+      event4Location: "Parcul Comunitatii",
       event4Description:
-        "Alergare ușoară pentru începători - în fiecare luni și vineri seara.",
+        "Innot cu ritm usor pentru incepatori - in fiecare luni si vineri seara.",
       event4DetailedDescription:
-        "Sesiuni de alergare ușoară în fiecare luni și vineri seara. Perfecte pentru începători sau pentru sesiuni de recuperare. Atmosferă relaxantă și prietenească pentru toți nivelurile.",
+        "Sesiuni de innot ușor în fiecare luni și vineri seara. Perfecte pentru începători sau pentru sesiuni de recuperare. Atmosferă relaxantă și prietenească pentru toți nivelurile.",
 
       // Event types and difficulty labels
       beginner: "Începător",
@@ -384,7 +383,7 @@ const resources = {
       kidsRaceDetails2: "🗓 6 iulie 2021 – legată de Turul Ciclist al Sibiului",
       kidsRaceDetails3: "👧👦 100 de participanți",
       autism24hDetails1: "🏁 70 echipe naționale",
-      autism24hDetails2: "🥇 Clubul din Blaj – locul 7 (1209 km alergați)",
+      autism24hDetails2: "🥇 Echipa locală – locul 7 (1209 km alergați)",
       autism24hDetails3: "🥉 Locul 3 la km licitați",
 
       // Price labels
@@ -406,7 +405,7 @@ const resources = {
 
       // Footer
       followUs: "Urmăriți-ne pe:",
-      copyright: "© 2025 Crosul Speranței Blaj",
+      copyright: "© 2025 Aplicația Comunității de Alergare",
 
       // Common
       free: "Gratuit",

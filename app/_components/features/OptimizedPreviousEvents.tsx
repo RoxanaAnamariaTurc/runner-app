@@ -6,10 +6,9 @@ import {
   Animated,
   Platform,
   Dimensions,
-  ScrollView,
 } from "react-native";
-import LazyImage from "./LazyImage";
-import { previousEventsData } from "../data/previousEvents";
+import LazyImage from "../ui/LazyImage";
+import { previousEventsData } from "../../data/previousEvents";
 
 interface OptimizedPreviousEventsProps {
   style?: any;
@@ -18,12 +17,9 @@ interface OptimizedPreviousEventsProps {
 const OptimizedPreviousEvents = memo(
   ({ style }: OptimizedPreviousEventsProps) => {
     const scrollX = useRef(new Animated.Value(0)).current;
-    const [containerWidth, setContainerWidth] = useState(
-      Dimensions.get("window").width
-    );
+    const [_, setContainerWidth] = useState(Dimensions.get("window").width);
     const [isPaused, setIsPaused] = useState(false);
     const animationRef = useRef<any>(null);
-    const scrollViewRef = useRef<ScrollView>(null);
 
     // Reduce to a manageable number of images for better performance
     const ITEM_WIDTH = 150;
@@ -226,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   pauseText: {
-    color: "#f0d26e",
+    color: "#4ECDC4",
     fontSize: 10,
     fontWeight: "600",
   },

@@ -6,16 +6,14 @@ import {
   Image,
   TouchableOpacity,
   Linking,
-  Dimensions,
   Platform,
 } from "react-native";
 import React from "react";
-import { useLocalSearchParams, router } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { eventsData, Event } from "./data/events";
+import { PlaceholderImage, PricingInfo } from "./_components";
 import { getCurrentPrices } from "./utils/pricing";
-import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
-import PricingInfo from "./_components/PricingInfo";
 import { getDisplayDate } from "./utils/dateUtils";
 
 export default function EventDetails() {
@@ -111,7 +109,11 @@ export default function EventDetails() {
       >
         {/* Header Image */}
         <View style={styles.headerImageContainer}>
-          <Image source={event.image} style={styles.headerImage} />
+          {event.image ? (
+            <Image source={event.image} style={styles.headerImage} />
+          ) : (
+            <PlaceholderImage style={styles.headerImage} />
+          )}
           <View style={styles.imageOverlay}></View>
         </View>
 
@@ -190,7 +192,7 @@ export default function EventDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1f3e25",
+    backgroundColor: "#0D0D0D", // Deep black background
   },
   scrollView: {
     flex: 1,
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   infoText: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Teal/cyan color
     fontSize: 16,
     fontWeight: "500",
   },
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   sectionTitle: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Teal/cyan color
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 12,
@@ -271,15 +273,15 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   difficultyPill: {
-    backgroundColor: "rgba(240, 210, 110, 0.15)",
-    borderColor: "rgba(240, 210, 110, 0.3)",
+    backgroundColor: "rgba(78, 205, 196, 0.15)", // Turquoise
+    borderColor: "rgba(78, 205, 196, 0.3)",
     borderWidth: 1,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
   },
   difficultyText: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Turquoise
     fontSize: 14,
     fontWeight: "500",
   },
@@ -309,12 +311,12 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   priceValue: {
-    color: "#f0d26e",
+    color: "#4ECDC4", // Teal/cyan color
     fontSize: 15,
     fontWeight: "600",
   },
   registerButton: {
-    backgroundColor: "#B8860B",
+    backgroundColor: "#4ECDC4", // Turquoise
     borderRadius: 12,
     paddingVertical: 16,
     paddingHorizontal: 24,

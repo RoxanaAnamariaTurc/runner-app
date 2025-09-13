@@ -5,7 +5,7 @@ import {
   getCurrentPricingPeriod,
   getNextPricingPeriod,
   getDaysUntilPriceChange,
-} from "../utils/pricing";
+} from "../../utils/pricing";
 
 interface PricingInfoProps {
   currentDate?: Date;
@@ -61,14 +61,14 @@ const styles = StyleSheet.create({
   currentPeriodBanner: {
     backgroundColor: "rgba(240, 210, 110, 0.15)",
     borderLeftWidth: 4,
-    borderLeftColor: "#f0d26e",
+    borderLeftColor: "#4ECDC4",
     paddingVertical: 12,
     paddingHorizontal: 15,
     borderRadius: 8,
     marginBottom: 10,
   },
   currentPeriodText: {
-    color: "#f0d26e",
+    color: "#4ECDC4",
     fontSize: 16,
     fontWeight: "600",
   },

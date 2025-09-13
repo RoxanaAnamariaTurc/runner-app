@@ -1,80 +1,83 @@
 import { getCurrentPrices } from "../utils/pricing";
+import img1 from "../../assets/images/img1.jpg";
+import img2 from "../../assets/images/img2.jpg";
+import img3 from "../../assets/images/img3.jpg";
+import img4 from "../../assets/images/img4.jpg";
 
 export const eventsData: Event[] = [
   {
     id: 1,
-    title: "Crosul Sperantei Blaj - Editia a VIII-a",
-    date: "4 Octombrie 2025",
-    location: "Campia Libertatii, Blaj",
+    title: "Annual Community Run",
+    date: "Coming Soon 2024",
+    location: "City Center Park",
     description:
-      "Evenimentul principal al anului - crosul care aduna comunitatea pentru o cauza nobila.",
-    image: require("../../assets/optimized/img1.jpg"),
+      "The main event of the year - bringing the community together for a great cause.",
+    image: img1,
     featured: true,
     detailedDescription:
-      "Alătură-te celei de-a VIII-a ediții a Crosului Speranței, un eveniment care combină sportul cu spiritul caritabil. Acest cros nu este doar o competiție, ci o mișcare de solidaritate pentru susținerea persoanelor cu dizabilități din comunitatea noastră.",
-    difficulty: ["Incepator", "Intermediar", "Avansat"],
+      "Join our annual community run, an event that combines fitness with community spirit. This run is not just a competition, but a movement of solidarity to support local causes.",
+    difficulty: ["Beginner", "Intermediate", "Advanced"],
     prices: getCurrentPrices(), // Dynamic pricing based on current date
-    distances: ["3 km", "10 km", "21 km (semimaraton)"],
+    distances: ["5 km", "10 km", "21 km (half marathon)"],
     startTime: "09:00",
-    registrationUrl: "https://racetime.ro/events/153/register",
+    registrationUrl: "#",
     hasDynamicPricing: true, // Flag to indicate this event uses dynamic pricing
   },
   {
     id: 2,
-    title: "Coffee Run",
-    date: "Sâmbătă, 19 Iulie (Săptămânal)",
-    location: "15400 (Vezi harta pentru rută)",
-    description:
-      "Alergare relaxantă de 10km pentru începători - în fiecare sâmbătă dimineața.",
-    image: require("../../assets/optimized/coffee-run.jpg"),
+    title: "Weekly Coffee Run",
+    date: "Every Saturday Morning",
+    location: "Community Meeting Point",
+    description: "Relaxing 10km run for beginners - every Saturday morning.",
+    image: img2,
     featured: true,
     detailedDescription:
-      "Eveniment săptămânal relaxant pentru începători. Coffee Run este o sesiune de alergare de 10km care are loc în fiecare sâmbătă dimineața. Perfect pentru cei care vor să înceapă ziua cu energie și să se conecteze cu comunitatea de alergători.",
-    difficulty: ["Începător"],
+      "Weekly relaxing event for beginners. Coffee Run is a 10km running session that takes place every Saturday morning. Perfect for those who want to start the day with energy and connect with the running community.",
+    difficulty: ["Beginner"],
     prices: {
-      participare: "Gratuit",
+      participation: "Free",
     },
     distances: ["10 km"],
-    startTime: "06:00",
-    registrationUrl: "https://strava.app.link/UcfoBqKd0Ub",
+    startTime: "07:00",
+    registrationUrl: "#",
   },
   {
     id: 3,
-    title: "1h Tempo Running Session Wednesday",
-    date: "Miercuri, 16 Iulie (Săptămânal)",
-    location: "Stadionul C.I.L.",
+    title: "Midweek Training Session",
+    date: "Every Wednesday Evening",
+    location: "Local Sports Center",
     description:
-      "Sesiune de antrenament tempo de 1 oră - nivel intermediar și începător.",
-    image: require("../../assets/optimized/tempo.jpg"),
+      "1-hour tempo training session - intermediate and beginner level.",
+    image: img3,
     featured: true,
     detailedDescription:
-      "Sesiune săptămânală de antrenament tempo în fiecare miercuri seara. Includes 1h Tempo Running - Intermediar Level și 30min Tempo Running - Beginner Level. Perfectă pentru dezvoltarea rezistenței și vitezei.",
-    difficulty: ["Începător", "Intermediar"],
+      "Weekly tempo training session every Wednesday evening. Includes structured tempo training designed to improve running pace and endurance. Open to intermediate and beginner runners.",
+    difficulty: ["Beginner", "Intermediate"],
     prices: {
-      participare: "Gratuit",
+      participation: "Free",
     },
-    distances: ["Variază în funcție de nivel"],
-    startTime: "19:45",
-    registrationUrl: "https://strava.app.link/KjhhilId0Ub",
+    distances: ["Varies by level"],
+    startTime: "19:00",
+    registrationUrl: "#",
   },
   {
     id: 4,
-    title: "Easy Run Mon & Fri",
-    date: "Luni și Vineri, 14 Iulie (Săptămânal)",
-    location: "Kime Market",
+    title: "Easy Pace Group Swim",
+    date: "Monday & Friday Evenings",
+    location: "Community Park",
     description:
-      "Alergare ușoară pentru începători - în fiecare luni și vineri seara.",
-    image: require("../../assets/optimized/easy.jpg"),
+      "Easy-paced swim for beginners - every Monday and Friday evening.",
+    image: img4,
     featured: true,
     detailedDescription:
-      "Sesiuni de alergare ușoară în fiecare luni și vineri seara. Perfecte pentru începători sau pentru sesiuni de recuperare. Atmosferă relaxantă și prietenească pentru toți nivelurile.",
-    difficulty: ["Începător"],
+      "Easy swimming sessions every Monday and Friday evening. Perfect for beginners or recovery sessions. Relaxed and friendly atmosphere for all levels.",
+    difficulty: ["Beginner"],
     prices: {
-      participare: "Gratuit",
+      participation: "Free",
     },
-    distances: ["3-5 km (în funcție de nivel)"],
-    startTime: "21:30",
-    registrationUrl: "https://strava.app.link/39KHNpGd0Ub",
+    distances: ["3-5 km (depending on level)"],
+    startTime: "19:30",
+    registrationUrl: "#",
   },
 ];
 

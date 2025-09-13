@@ -7,15 +7,11 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Stack, router, usePathname } from "expo-router";
-import logo from "../assets/images/logo-crosul.png";
-import LoadingScreen from "./_components/LoadingScreen";
-import LanguageSwitcher from "./_components/LanguageSwitcher";
+import logo from "../assets/images/logo1.png";
+import { LoadingScreen, LanguageSwitcher } from "./_components";
 import "./i18n/config";
 import { useTranslation } from "react-i18next";
-import {
-  initializePageAccessibility,
-  setPageLanguage,
-} from "./utils/accessibility";
+import { initializePageAccessibility } from "./utils/accessibility";
 import PerformanceUtils from "./utils/performanceUtils";
 
 const RootLayout = () => {
@@ -117,9 +113,7 @@ const RootLayout = () => {
 
           // Check critical images loading
           const checkImagesReady = () => {
-            const criticalImages = [
-              require("../assets/images/logo-crosul.png"),
-            ];
+            const criticalImages = [require("../assets/images/logo1.png")];
 
             Promise.allSettled(
               criticalImages.map(
@@ -264,7 +258,7 @@ const RootLayout = () => {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#1f3e25",
+          backgroundColor: "#0D0D0D",
         },
         headerTintColor: "#eee",
         headerRight: () => <LogoHeader />,
